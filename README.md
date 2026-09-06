@@ -1,5 +1,26 @@
-# Vue 3 + TypeScript + Vite
+# Brew Pilot Marketing Site
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+Marketing site do Brew Pilot em Vue 3, TypeScript e Vite SSG. As páginas públicas são pré-renderizadas para que conteúdo, H1 e metadata estejam no HTML inicial.
 
-Learn more about the recommended Project Setup and IDE Support in the [Vue Docs TypeScript Guide](https://vuejs.org/guide/typescript/overview.html#project-setup).
+## Desenvolvimento
+
+```bash
+npm install
+cp .env.example .env.local
+npm run dev
+```
+
+`VITE_BREW_PILOT_APP_URL` aponta para o aplicativo. Login, cadastro, planos e documentos legais são resolvidos pelo `BrewPilotAppConnector`. O site não mantém preços nem checkout locais.
+
+## Build
+
+```bash
+npm run build
+npm run preview
+```
+
+O build gera 30 páginas localizadas em `dist`, além de `sitemap.xml`, `robots.txt` e uma página 404. Comparativos específicos são pré-renderizados como rascunhos `noindex`, fora do sitemap.
+
+## Rotas
+
+Português usa a raiz, inglês usa `/en/` e espanhol usa `/es/`. Cada seletor de idioma preserva a página atual.

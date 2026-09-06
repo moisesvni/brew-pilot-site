@@ -1,0 +1,219 @@
+import type { Locale, PageKind, PageMeta, ScreenshotProps } from './types'
+
+export type MarketingPageKind = Exclude<PageKind, 'privacy' | 'cookies' | 'terms'>
+
+export interface UiCopy {
+  nav: {
+    product: string
+    tools: string
+    compare: string
+    pricing: string
+    resources: string
+    login: string
+    start: string
+    explore: string
+    menu: string
+    close: string
+  }
+  footer: { tagline: string; ctaTitle: string; ctaBody: string; ctaAction: string; status: string; product: string; resources: string; legal: string; about: string; contact: string; support: string; privacy: string; cookies: string; terms: string }
+  common: { soon: string; viewMore: string; appOnly: string; pending: string; backHome: string; email: string; language: string; privacyConsent: string; productStories: string; faq: string }
+  consent: { title: string; body: string; accept: string; reject: string; settings: string }
+  cycle: string[]
+  cycleDescriptions: string[]
+  bento: Array<{ title: string; body: string }>
+  comparePairs: Array<{ label: string; value: string }>
+  assistantPlaceholder: string
+  homeValueTitle: string
+  homeValueBody: string
+  homeFinalTitle: string
+  faqTitle: string
+  pricingPlansTitle: string
+  pricingPlans: Array<{
+    key: 'free' | 'plus' | 'pro'
+    name: string
+    description: string
+    price: string
+    cadence: string
+    marker: string
+    cta: string
+    featured?: boolean
+    features: string[]
+  }>
+}
+
+export interface PageCopy {
+  meta: PageMeta
+  intro: string
+  cta: string
+  secondary?: string
+  sections: Array<{ title: string; body: string; link?: string }>
+  screenshots: ScreenshotProps[]
+  faq?: Array<{ question: string; answer: string }>
+}
+
+const baseUi: Record<Locale, UiCopy> = {
+  'pt-BR': {
+    nav: { product: 'Produto', tools: 'Ferramentas', compare: 'Comparar', pricing: 'Preços', resources: 'Recursos', login: 'Entrar', start: 'Começar grátis', explore: 'Explorar a plataforma', menu: 'Abrir menu', close: 'Fechar menu' },
+    footer: { tagline: 'Planeje melhor. Brasse com intenção. Aprenda a cada lote.', ctaTitle: 'A próxima brassagem começa com uma decisão melhor.', ctaBody: 'Receita, processo e memória no mesmo fio de contexto.', ctaAction: 'Explorar o produto', status: 'Aprendizado que acompanha cada lote', product: 'Produto', resources: 'Recursos', legal: 'Legal', about: 'Sobre', contact: 'Contato', support: 'Suporte', privacy: 'Privacidade', cookies: 'Cookies', terms: 'Termos' },
+    common: { soon: 'Em breve', viewMore: 'Ver detalhes', appOnly: 'Disponível no aplicativo Brew Pilot', pending: 'Integração em preparação', backHome: 'Voltar para a home', email: 'E-mail de suporte', language: 'Idioma', privacyConsent: 'Consentimento de privacidade', productStories: 'Histórias do produto Brew Pilot', faq: 'FAQ' },
+    consent: { title: 'Privacidade no seu ritmo', body: 'Usamos métricas somente com seu consentimento. Você pode mudar essa escolha a qualquer momento.', accept: 'Aceitar métricas', reject: 'Recusar', settings: 'Preferências de privacidade' },
+    cycle: ['Planejar', 'Criar', 'Brassar', 'Acompanhar', 'Analisar', 'Evoluir'],
+    cycleDescriptions: ['Decisões claras antes do fogo.', 'Uma receita que explica suas escolhas.', 'Execução com menos improviso.', 'O que mudou também entra no lote.', 'Resultados que você consegue comparar.', 'A próxima versão começa aqui.'],
+    bento: [{ title: 'Estoque', body: 'Saiba o que está disponível antes de planejar.' }, { title: 'Custos', body: 'Entenda o lote sem esconder o detalhe importante.' }, { title: 'Água', body: 'Guarde o perfil que influencia a próxima decisão.' }],
+    comparePairs: [{ label: 'Brew Pilot', value: 'Contexto conectado' }, { label: 'Software tradicional', value: 'O ponto de partida' }],
+    assistantPlaceholder: 'Placeholder de asset oficial',
+    homeValueTitle: 'O processo fica mais forte quando o aprendizado não se perde.',
+    homeValueBody: 'Planos e contratação ficam no aplicativo Brew Pilot.',
+    homeFinalTitle: 'Sua próxima receita pode ser melhor que a última.',
+    faqTitle: 'Respostas antes de começar.',
+    pricingPlansTitle: 'Escolha o nível que acompanha seu próximo lote.',
+    pricingPlans: [
+      { key: 'free', name: 'Free', description: 'O essencial para criar, testar e organizar suas primeiras receitas.', price: 'R$ 0', cadence: 'para começar', marker: 'Primeiro lote', cta: 'Abrir no app', features: ['Criação de receitas', 'Checklist de brassagem', 'Registro de lotes', 'Perfil de equipamento', 'Histórico essencial', 'Acesso à sua conta'] },
+      { key: 'plus', name: 'Plus', description: 'Mais continuidade para quem quer acompanhar sua cervejaria de perto.', price: 'R$ 9', cadence: '/mês', marker: 'Para manter o ritmo', cta: 'Ver no app', featured: true, features: ['Receitas ilimitadas', 'Controle de estoque básico', 'Sincronização com 1 dispositivo', 'Perfis de água e calculadoras', 'Visualizações avançadas no editor', 'Histórico de lotes e versões'] },
+      { key: 'pro', name: 'Pro', description: 'Recursos avançados para uma operação cervejeira ainda mais completa.', price: 'R$ 19', cadence: '/mês', marker: 'Experiência completa', cta: 'Fazer upgrade no app', features: ['Receitas e estoque do Plus', 'Perfis de água do Plus', 'Assistente de IA Mr. Hoppin', 'Exportação em PDF, BeerXML e JSON', 'Calculadoras avançadas de mostura', 'Histórico completo de lotes'] },
+    ],
+  },
+  'en-US': {
+    nav: { product: 'Product', tools: 'Tools', compare: 'Compare', pricing: 'Pricing', resources: 'Resources', login: 'Log in', start: 'Start free', explore: 'Explore the platform', menu: 'Open menu', close: 'Close menu' },
+    footer: { tagline: 'Plan with care. Brew with intent. Learn from every batch.', ctaTitle: 'The next brew starts with a better decision.', ctaBody: 'Recipe, process, and memory in one connected thread.', ctaAction: 'Explore the product', status: 'Learning that follows every batch', product: 'Product', resources: 'Resources', legal: 'Legal', about: 'About', contact: 'Contact', support: 'Support', privacy: 'Privacy', cookies: 'Cookies', terms: 'Terms' },
+    common: { soon: 'Coming soon', viewMore: 'View details', appOnly: 'Available in the Brew Pilot app', pending: 'Integration in progress', backHome: 'Back to home', email: 'Support email', language: 'Language', privacyConsent: 'Privacy consent', productStories: 'Brew Pilot product stories', faq: 'FAQ' },
+    consent: { title: 'Privacy at your pace', body: 'We use measurement only with your consent. You can change this choice at any time.', accept: 'Accept measurement', reject: 'Decline', settings: 'Privacy preferences' },
+    cycle: ['Plan', 'Create', 'Brew', 'Track', 'Review', 'Evolve'],
+    cycleDescriptions: ['Clear decisions before the fire.', 'A recipe that explains its choices.', 'Execution with less improvisation.', 'What changed becomes part of the batch.', 'Results you can compare.', 'The next version starts here.'],
+    bento: [{ title: 'Inventory', body: 'Know what is available before you plan.' }, { title: 'Costs', body: 'Understand the batch without hiding the important detail.' }, { title: 'Water', body: 'Keep the profile that shapes the next decision.' }],
+    comparePairs: [{ label: 'Brew Pilot', value: 'Connected context' }, { label: 'Traditional software', value: 'The starting point' }],
+    assistantPlaceholder: 'Official asset placeholder',
+    homeValueTitle: 'The process gets stronger when learning is not lost.',
+    homeValueBody: 'Plans and billing live in the Brew Pilot app.',
+    homeFinalTitle: 'Your next recipe can be better than the last.',
+    faqTitle: 'Answers before you start.',
+    pricingPlansTitle: 'Choose the level that follows your next batch.',
+    pricingPlans: [
+      { key: 'free', name: 'Free', description: 'The essentials to create, test and organize your first recipes.', price: 'R$ 0', cadence: 'to get started', marker: 'First batch', cta: 'Open in the app', features: ['Recipe creation', 'Brew day checklist', 'Batch notes', 'Equipment profile', 'Essential history', 'Account access'] },
+      { key: 'plus', name: 'Plus', description: 'More continuity for brewers who want to follow their brewery closely.', price: 'R$ 9', cadence: '/month', marker: 'Keep the rhythm', cta: 'View in the app', featured: true, features: ['Unlimited recipes', 'Basic inventory control', 'Sync with one device', 'Water profiles and calculators', 'Advanced editor views', 'Batch and version history'] },
+      { key: 'pro', name: 'Pro', description: 'Advanced resources for an even more complete brewing operation.', price: 'R$ 19', cadence: '/month', marker: 'Complete experience', cta: 'Upgrade in the app', features: ['Plus recipes and inventory', 'Plus water profiles', 'Mr. Hoppin AI assistant', 'PDF, BeerXML and JSON exports', 'Advanced mash calculators', 'Complete batch history'] },
+    ],
+  },
+  es: {
+    nav: { product: 'Producto', tools: 'Herramientas', compare: 'Comparar', pricing: 'Precios', resources: 'Recursos', login: 'Entrar', start: 'Empezar gratis', explore: 'Explorar la plataforma', menu: 'Abrir menú', close: 'Cerrar menú' },
+    footer: { tagline: 'Planifica mejor. Elabora con intención. Aprende de cada lote.', ctaTitle: 'La próxima elaboración empieza con una mejor decisión.', ctaBody: 'Receta, proceso y memoria en un mismo hilo de contexto.', ctaAction: 'Explorar el producto', status: 'Aprendizaje que acompaña cada lote', product: 'Producto', resources: 'Recursos', legal: 'Legal', about: 'Sobre nosotros', contact: 'Contacto', support: 'Soporte', privacy: 'Privacidad', cookies: 'Cookies', terms: 'Términos' },
+    common: { soon: 'Próximamente', viewMore: 'Ver detalles', appOnly: 'Disponible en la aplicación Brew Pilot', pending: 'Integración en preparación', backHome: 'Volver al inicio', email: 'Correo de soporte', language: 'Idioma', privacyConsent: 'Consentimiento de privacidad', productStories: 'Historias del producto Brew Pilot', faq: 'FAQ' },
+    consent: { title: 'Privacidad a tu ritmo', body: 'Usamos métricas solo con tu consentimiento. Puedes cambiar esta elección cuando quieras.', accept: 'Aceptar métricas', reject: 'Rechazar', settings: 'Preferencias de privacidad' },
+    cycle: ['Planificar', 'Crear', 'Elaborar', 'Acompañar', 'Analizar', 'Evolucionar'],
+    cycleDescriptions: ['Decisiones claras antes del fuego.', 'Una receta que explica sus decisiones.', 'Ejecución con menos improvisación.', 'Lo que cambió también entra en el lote.', 'Resultados que puedes comparar.', 'La próxima versión empieza aquí.'],
+    bento: [{ title: 'Inventario', body: 'Conoce lo disponible antes de planificar.' }, { title: 'Costes', body: 'Entiende el lote sin esconder el detalle importante.' }, { title: 'Agua', body: 'Guarda el perfil que influye en la próxima decisión.' }],
+    comparePairs: [{ label: 'Brew Pilot', value: 'Contexto conectado' }, { label: 'Software tradicional', value: 'El punto de partida' }],
+    assistantPlaceholder: 'Placeholder de asset oficial',
+    homeValueTitle: 'El proceso se fortalece cuando el aprendizaje no se pierde.',
+    homeValueBody: 'Los planes y la contratación están en la aplicación Brew Pilot.',
+    homeFinalTitle: 'Tu próxima receta puede ser mejor que la anterior.',
+    faqTitle: 'Respuestas antes de empezar.',
+    pricingPlansTitle: 'Elige el nivel que acompaña tu próximo lote.',
+    pricingPlans: [
+      { key: 'free', name: 'Free', description: 'Lo esencial para crear, probar y organizar tus primeras recetas.', price: 'R$ 0', cadence: 'para empezar', marker: 'Primer lote', cta: 'Abrir en la app', features: ['Creación de recetas', 'Checklist de elaboración', 'Registro de lotes', 'Perfil de equipo', 'Historial esencial', 'Acceso a tu cuenta'] },
+      { key: 'plus', name: 'Plus', description: 'Más continuidad para quien quiere acompañar de cerca su cervecería.', price: 'R$ 9', cadence: '/mes', marker: 'Mantén el ritmo', cta: 'Ver en la app', featured: true, features: ['Recetas ilimitadas', 'Control de inventario básico', 'Sincronización con un dispositivo', 'Perfiles de agua y calculadoras', 'Vistas avanzadas del editor', 'Historial de lotes y versiones'] },
+      { key: 'pro', name: 'Pro', description: 'Recursos avanzados para una operación cervecera aún más completa.', price: 'R$ 19', cadence: '/mes', marker: 'Experiencia completa', cta: 'Actualizar en la app', features: ['Recetas e inventario del Plus', 'Perfiles de agua del Plus', 'Asistente de IA Mr. Hoppin', 'Exportación a PDF, BeerXML y JSON', 'Calculadoras avanzadas de maceración', 'Historial completo de lotes'] },
+    ],
+  },
+}
+
+const screenshot = (id: string, label: string, alt: string, tone: ScreenshotProps['tone'] = 'wide'): ScreenshotProps => ({ id, label, alt, tone })
+
+const content: Record<Locale, Record<MarketingPageKind, PageCopy>> = {
+  'pt-BR': {
+    home: {
+      meta: { title: 'Brew Pilot | Sua melhor cerveja começa antes da brassagem', description: 'Conecte receitas, estoque e brassagens. Compare resultados e melhore sua próxima cerveja com o Brew Pilot.', heading: 'Sua melhor cerveja começa antes da brassagem.', eyebrow: 'Para quem leva cada lote a sério', path: '/' },
+      intro: 'Conecte receitas, estoque e brassagens. Compare resultados e melhore sua próxima cerveja.', cta: 'Começar grátis', secondary: 'Explorar a plataforma',
+      sections: [
+        { title: 'Uma linha de raciocínio para cada lote', body: 'Da ideia ao aprendizado, o Brew Pilot mantém as decisões e os resultados no mesmo lugar.' },
+        { title: 'O seu processo tem contexto', body: 'Equipamento, mostura, fermentação e água deixam de ser notas soltas e passam a formar um método.' },
+        { title: 'O dia de brassagem pede clareza', body: 'Leve o plano para a execução e registre o que mudou enquanto ainda está acontecendo.' },
+        { title: 'Aprender começa no histórico', body: 'Compare versões, custos e resultados para repetir o que funcionou e ajustar o próximo lote.' },
+        { title: 'Tudo que a receita precisa para avançar', body: 'Estoque, custos e água ficam conectados ao processo, sem transformar a home em um painel.' },
+        { title: 'Inteligência no momento certo', body: 'Dr. Hoppin ajuda a organizar perguntas e próximos passos. Recursos de IA entram quando estiverem prontos.' },
+        { title: 'Uma plataforma feita para evoluir com você', body: 'Mais intenção antes da brassagem. Mais aprendizado depois dela.' },
+      ],
+      screenshots: [screenshot('hero-recipe-builder', 'Placeholder de screenshot: construtor de receita', 'Espaço reservado para o screenshot do construtor de receita'), screenshot('brew-day-checklist', 'Placeholder de screenshot: checklist de brassagem', 'Espaço reservado para o screenshot do checklist de brassagem', 'tall'), screenshot('batch-history', 'Placeholder de screenshot: histórico de lotes', 'Espaço reservado para o screenshot do histórico de lotes'), screenshot('inventory', 'Placeholder de screenshot: estoque conectado', 'Espaço reservado para o screenshot do estoque'), screenshot('costs', 'Placeholder de screenshot: custos por lote', 'Espaço reservado para o screenshot de custos'), screenshot('water', 'Placeholder de screenshot: perfil de água', 'Espaço reservado para o screenshot do perfil de água'), screenshot('recipe-versioning', 'Placeholder de screenshot: histórico e versões', 'Espaço reservado para o screenshot de histórico e versões')],
+      faq: [{ question: 'O Brew Pilot serve para quem está começando?', answer: 'Sim. A plataforma organiza decisões e registros sem exigir que você domine todos os cálculos desde o primeiro lote.' }, { question: 'Preciso importar minhas receitas?', answer: 'Não. Você pode começar uma receita nova e construir seu histórico dentro do Brew Pilot.' }, { question: 'Onde encontro os detalhes de planos?', answer: 'Os planos e a contratação ficam no aplicativo. O botão desta página leva você para a área de planos quando ela estiver configurada.' }],
+    },
+    features: { meta: { title: 'Produto | Brew Pilot', description: 'Conheça o fluxo do Brew Pilot, da ideia da receita ao aprendizado do lote.', heading: 'O produto acompanha o raciocínio por trás da receita.', eyebrow: 'Produto', path: '/features' }, intro: 'Uma plataforma conectada para transformar intenção em prática e prática em aprendizado.', cta: 'Começar grátis', secondary: 'Voltar para a home', sections: [{ title: 'Planeje antes de abrir a panela', body: 'Receitas, perfis e decisões importantes começam com uma estrutura que você consegue revisar.' }, { title: 'Brasse com um plano claro', body: 'O Brew Day leva o que foi planejado para o momento em que cada escolha importa.' }, { title: 'Registre o que aconteceu', body: 'Lote e histórico criam uma memória prática, pronta para a próxima versão.' }, { title: 'Evolua com evidência', body: 'Compare o resultado com o que você pretendia fazer e ajuste com mais confiança.' }], screenshots: [screenshot('recipe-builder', 'Placeholder de screenshot: planejamento da receita', 'Espaço reservado para o screenshot do planejamento da receita'), screenshot('equipment-profile', 'Placeholder de screenshot: perfil de equipamento', 'Espaço reservado para o screenshot do perfil de equipamento'), screenshot('brew-day-checklist', 'Placeholder de screenshot: execução do Brew Day', 'Espaço reservado para o screenshot do Brew Day', 'tall'), screenshot('recipe-versioning', 'Placeholder de screenshot: versionamento', 'Espaço reservado para o screenshot de versionamento')], faq: [] },
+    pricing: { meta: { title: 'Preços | Brew Pilot', description: 'Entenda o valor do Brew Pilot e acesse os planos no aplicativo.', heading: 'O valor aparece quando o processo fica mais claro.', eyebrow: 'Planos no aplicativo', path: '/pricing' }, intro: 'O marketing explica a proposta. Planos, preços e contratação vivem no app Brew Pilot.', cta: 'Ver planos no Brew Pilot', secondary: 'Conhecer o produto', sections: [{ title: 'Mais clareza antes do lote', body: 'Planeje melhor antes da brassagem e entre no lote sabendo o que importa.' }, { title: 'Mais memória depois do lote', body: 'Histórico e versionamento tornam cada brassagem uma fonte para a próxima.' }, { title: 'Detalhes de assinatura no app', body: 'A área de planos do aplicativo mostra as opções disponíveis para sua conta.' }], screenshots: [], faq: [{ question: 'Qual plano faz sentido para começar?', answer: 'O Free cobre o primeiro fluxo de receita e registro. Quando você precisar de mais continuidade, Plus e Pro ampliam o processo dentro do app.' }, { question: 'Posso trocar de plano depois?', answer: 'Sim, a área de conta do Brew Pilot é o lugar certo para consultar as opções disponíveis e iniciar uma mudança.' }, { question: 'Onde acontece a contratação?', answer: 'Cadastro, login, cobrança e contratação acontecem no aplicativo Brew Pilot. O site apenas apresenta a proposta e leva você para lá.' }, { question: 'O que muda no plano Pro?', answer: 'O Pro reúne os recursos do Plus e acrescenta o assistente Mr. Hoppin, exportações e calculadoras avançadas do app.' }] },
+    compare: { meta: { title: 'Comparar | Brew Pilot', description: 'Entenda a proposta do Brew Pilot para conectar planejamento, brassagem e aprendizado.', heading: 'Compare propostas. Escolha o processo que faz sentido para você.', eyebrow: 'Comparar', path: '/compare' }, intro: 'O Brew Pilot não precisa diminuir outras ferramentas para explicar o próprio foco.', cta: 'Explorar a plataforma', secondary: 'Ver ferramentas', sections: [{ title: 'Menos troca de contexto', body: 'Receita, equipamento, lote e histórico vivem em uma mesma linha de trabalho.' }, { title: 'Mais contexto para aprender', body: 'O objetivo não é acumular telas. É deixar a decisão seguinte mais informada.' }, { title: 'Comparações específicas em preparação', body: 'Páginas individuais só serão publicadas quando houver fontes oficiais e verificáveis para cada alegação.' }], screenshots: [] },
+    tools: { meta: { title: 'Ferramentas | Brew Pilot', description: 'Veja as ferramentas cervejeiras planejadas para o Brew Pilot.', heading: 'Ferramentas úteis, no momento certo.', eyebrow: 'Ferramentas', path: '/tools' }, intro: 'Estamos preparando ferramentas que ajudam a responder perguntas práticas sem separar cálculo de contexto.', cta: 'Explorar a plataforma', secondary: 'Voltar para o produto', sections: [{ title: 'Calculadora de ABV', body: 'Estime o álcool da receita com os dados que já fazem parte do seu processo.' }, { title: 'Calculadora de IBU', body: 'Organize a contribuição de amargor sem perder de vista a receita inteira.' }, { title: 'Calculadora de priming', body: 'Planeje a carbonatação como parte do lote, não como uma etapa isolada.' }], screenshots: [] },
+    about: { meta: { title: 'Sobre o Brew Pilot', description: 'Conheça a visão do Brew Pilot para ajudar cervejeiros a aprender com cada lote.', heading: 'Tecnologia para prestar atenção no que a brassagem ensina.', eyebrow: 'Sobre o Brew Pilot', path: '/about' }, intro: 'O Brew Pilot nasceu da vontade de tornar o processo cervejeiro mais observável, sem tirar sua parte manual.', cta: 'Explorar a plataforma', secondary: 'Falar com suporte', sections: [{ title: 'Cerveja é prática e memória', body: 'Uma boa ferramenta respeita a bancada, o tempo e as decisões de quem está fazendo.' }, { title: 'Clareza antes de complexidade', body: 'Começamos pela linha de raciocínio que ajuda a fazer uma próxima brassagem melhor.' }, { title: 'Construído em ciclos', body: 'O produto cresce com perguntas reais, registros honestos e espaço para aprender.' }], screenshots: [] },
+    contact: { meta: { title: 'Contato | Brew Pilot', description: 'Encontre o canal de suporte do Brew Pilot e acompanhe a integração de contato.', heading: 'Vamos manter o canal aberto.', eyebrow: 'Contato e suporte', path: '/contact' }, intro: 'O canal de suporte fica configurado por ambiente. O formulário conectado à API Brew Pilot está em preparação.', cta: 'Explorar a plataforma', secondary: 'Voltar para a home', sections: [{ title: 'Suporte por e-mail', body: 'Quando disponível, o endereço configurado aparece nesta página para orientar sua mensagem.' }, { title: 'Integração em preparação', body: 'Não simulamos envio. A API pública de contato definirá endpoint, segurança e respostas antes da ativação.' }], screenshots: [] },
+    comparison: { meta: { title: 'Comparativo em preparação | Brew Pilot', description: 'Esta página comparativa está em preparação e ainda não está disponível para indexação.', heading: 'Comparativo em preparação.', eyebrow: 'Rascunho', path: '/compare' }, intro: 'A página só será publicada quando cada afirmação tiver fonte oficial e revisão de conteúdo.', cta: 'Voltar para comparar', secondary: 'Explorar a plataforma', sections: [{ title: 'Conteúdo responsável', body: 'Não inventamos limites, recursos ou diferenças de outras ferramentas.' }], screenshots: [] },
+    'not-found': { meta: { title: 'Página não encontrada | Brew Pilot', description: 'A página que você procurou não existe.', heading: 'Esta página ainda não existe.', eyebrow: '404', path: '/' }, intro: 'Volte para a home e continue explorando o Brew Pilot.', cta: 'Voltar para a home', sections: [], screenshots: [] },
+  },
+  'en-US': {} as Record<PageKind, PageCopy>,
+  es: {} as Record<PageKind, PageCopy>,
+}
+
+const localizedOverrides: Record<Locale, Partial<Record<PageKind, PageCopy>>> = {
+  'pt-BR': {},
+  'en-US': {
+    home: { ...content['pt-BR'].home, meta: { ...content['pt-BR'].home.meta, title: 'Brew Pilot | Your best beer starts before brew day', description: 'Connect recipes, inventory, and brew days. Compare results and improve your next beer with Brew Pilot.', heading: 'Your best beer starts before brew day.', eyebrow: 'For brewers who take every batch seriously', path: '/' }, intro: 'Connect recipes, inventory, and brew days. Compare results and improve your next beer.', cta: 'Start free', secondary: 'Explore the platform', sections: content['pt-BR'].home.sections.map((s, i) => ({ ...s, title: ['One line of thinking for every batch', 'Your process has context', 'Brew day asks for clarity', 'Learning starts in history', 'Everything a recipe needs to move forward', 'Intelligence at the right moment', 'A platform that evolves with you'][i], body: ['From idea to learning, Brew Pilot keeps decisions and results in one place.', 'Equipment, mash, fermentation, and water become a method instead of scattered notes.', 'Take your plan into execution and record what changed while it happens.', 'Compare versions, costs, and outcomes to repeat what worked and adjust the next batch.', 'Inventory, costs, and water stay connected to the process without turning the home into a dashboard.', 'Dr. Hoppin helps organize questions and next steps. AI features arrive when they are ready.', 'More intention before brew day. More learning after it.'][i] })), screenshots: content['pt-BR'].home.screenshots.map((s) => ({ ...s, label: s.label.replace('Placeholder de screenshot:', 'Screenshot placeholder:'), alt: s.alt.replace('Espaço reservado para o screenshot', 'Reserved space for the screenshot') })), faq: [{ question: 'Is Brew Pilot useful if I am just starting?', answer: 'Yes. The platform organizes decisions and records without requiring you to master every calculation on your first batch.' }, { question: 'Do I need to import recipes?', answer: 'No. Start a new recipe and build your history inside Brew Pilot.' }, { question: 'Where can I find plan details?', answer: 'Plans and billing live in the app. This page takes you to the plan area when it is configured.' }] },
+    features: { ...content['pt-BR'].features, meta: { ...content['pt-BR'].features.meta, title: 'Product | Brew Pilot', description: 'Explore the Brew Pilot flow, from recipe idea to batch learning.', heading: 'The product follows the thinking behind the recipe.', eyebrow: 'Product' }, intro: 'A connected platform for turning intent into practice, and practice into learning.', cta: 'Start free', secondary: 'Back to home' },
+    pricing: { ...content['pt-BR'].pricing, meta: { ...content['pt-BR'].pricing.meta, title: 'Pricing | Brew Pilot', description: 'Understand Brew Pilot value and access plans in the app.', heading: 'Value appears when the process gets clearer.', eyebrow: 'Plans in the app' }, intro: 'Marketing explains the proposition. Plans, prices, and billing live in the Brew Pilot app.', cta: 'View plans in Brew Pilot', secondary: 'Explore the product', faq: [{ question: 'Which plan makes sense to start?', answer: 'Free covers the first recipe and batch record flow. When you need more continuity, Plus and Pro expand the process in the app.' }, { question: 'Can I change plans later?', answer: 'Yes. The Brew Pilot account area is where you can review the available options and start a change.' }, { question: 'Where does checkout happen?', answer: 'Signup, login, billing, and checkout happen in the Brew Pilot app. The site explains the offer and takes you there.' }, { question: 'What changes with Pro?', answer: 'Pro includes Plus capabilities and adds Mr. Hoppin, exports, and advanced calculators from the app.' }] },
+    compare: { ...content['pt-BR'].compare, meta: { ...content['pt-BR'].compare.meta, title: 'Compare | Brew Pilot', description: 'Understand Brew Pilot approach to connecting planning, brewing, and learning.', heading: 'Compare approaches. Choose the process that fits you.', eyebrow: 'Compare' }, intro: 'Brew Pilot does not need to diminish other tools to explain its focus.', cta: 'Explore the platform', secondary: 'See tools' },
+    tools: { ...content['pt-BR'].tools, meta: { ...content['pt-BR'].tools.meta, title: 'Tools | Brew Pilot', description: 'See the brewing tools planned for Brew Pilot.', heading: 'Useful tools, at the right moment.', eyebrow: 'Tools' }, intro: 'We are preparing tools that answer practical questions without separating calculation from context.', cta: 'Explore the platform', secondary: 'Back to product' },
+    about: { ...content['pt-BR'].about, meta: { ...content['pt-BR'].about.meta, title: 'About Brew Pilot', description: 'Learn how Brew Pilot helps brewers learn from every batch.', heading: 'Technology for noticing what brewing teaches.', eyebrow: 'About Brew Pilot' }, intro: 'Brew Pilot started with a desire to make brewing more observable without taking away its hands-on nature.', cta: 'Explore the platform', secondary: 'Contact support' },
+    contact: { ...content['pt-BR'].contact, meta: { ...content['pt-BR'].contact.meta, title: 'Contact | Brew Pilot', description: 'Find Brew Pilot support and follow the contact integration.', heading: 'Let us keep the channel open.', eyebrow: 'Contact and support' }, intro: 'Support is configured by environment. The form connected to the Brew Pilot API is in preparation.', cta: 'Explore the platform', secondary: 'Back to home' },
+    comparison: { ...content['pt-BR'].comparison, meta: { ...content['pt-BR'].comparison.meta, title: 'Comparison in preparation | Brew Pilot', description: 'This comparison page is in preparation and is not available for indexing.', heading: 'Comparison in preparation.', eyebrow: 'Draft' }, intro: 'This page will be published when every claim has an official source and content review.', cta: 'Back to compare', secondary: 'Explore the platform' },
+  },
+  es: {
+    home: { ...content['pt-BR'].home, meta: { ...content['pt-BR'].home.meta, title: 'Brew Pilot | Tu mejor cerveza empieza antes de elaborar', description: 'Conecta recetas, inventario y elaboraciones. Compara resultados y mejora tu próxima cerveza con Brew Pilot.', heading: 'Tu mejor cerveza empieza antes de elaborar.', eyebrow: 'Para quienes se toman en serio cada lote', path: '/' }, intro: 'Conecta recetas, inventario y elaboraciones. Compara resultados y mejora tu próxima cerveza.', cta: 'Empezar gratis', secondary: 'Explorar la plataforma', sections: content['pt-BR'].home.sections.map((s, i) => ({ ...s, title: ['Una línea de pensamiento para cada lote', 'Tu proceso tiene contexto', 'El día de elaboración pide claridad', 'Aprender empieza en el historial', 'Todo lo que una receta necesita para avanzar', 'Inteligencia en el momento adecuado', 'Una plataforma que evoluciona contigo'][i], body: ['De la idea al aprendizaje, Brew Pilot mantiene decisiones y resultados en un mismo lugar.', 'Equipo, macerado, fermentación y agua dejan de ser notas sueltas y forman un método.', 'Lleva el plan a la ejecución y registra lo que cambió mientras sucede.', 'Compara versiones, costes y resultados para repetir lo que funcionó y ajustar el próximo lote.', 'Inventario, costes y agua se conectan al proceso sin convertir la home en un panel.', 'Dr. Hoppin ayuda a ordenar preguntas y próximos pasos. Las funciones de IA llegarán cuando estén listas.', 'Más intención antes de elaborar. Más aprendizaje después.'][i] })), screenshots: content['pt-BR'].home.screenshots.map((s) => ({ ...s, label: s.label.replace('Placeholder de screenshot:', 'Placeholder de captura:'), alt: s.alt.replace('Espaço reservado para o screenshot', 'Espacio reservado para la captura') })), faq: [{ question: '¿Brew Pilot sirve para quienes empiezan?', answer: 'Sí. La plataforma organiza decisiones y registros sin exigir que domines todos los cálculos desde el primer lote.' }, { question: '¿Tengo que importar mis recetas?', answer: 'No. Puedes comenzar una receta nueva y construir tu historial dentro de Brew Pilot.' }, { question: '¿Dónde encuentro los detalles de los planes?', answer: 'Los planes y la contratación están en la aplicación. Este botón te lleva al área de planes cuando esté configurada.' }] },
+    features: { ...content['pt-BR'].features, meta: { ...content['pt-BR'].features.meta, title: 'Producto | Brew Pilot', description: 'Conoce el flujo de Brew Pilot, desde la idea de la receta hasta el aprendizaje del lote.', heading: 'El producto acompaña el razonamiento detrás de la receta.', eyebrow: 'Producto' }, intro: 'Una plataforma conectada para convertir intención en práctica y práctica en aprendizaje.', cta: 'Empezar gratis', secondary: 'Volver al inicio' },
+    pricing: { ...content['pt-BR'].pricing, meta: { ...content['pt-BR'].pricing.meta, title: 'Precios | Brew Pilot', description: 'Entiende el valor de Brew Pilot y accede a los planes en la aplicación.', heading: 'El valor aparece cuando el proceso se vuelve más claro.', eyebrow: 'Planes en la aplicación' }, intro: 'El marketing explica la propuesta. Los planes, precios y contratación viven en la aplicación Brew Pilot.', cta: 'Ver planes en Brew Pilot', secondary: 'Conocer el producto', faq: [{ question: '¿Qué plan tiene sentido para empezar?', answer: 'Free cubre el primer flujo de recetas y registro de lotes. Cuando necesites más continuidad, Plus y Pro amplían el proceso en la aplicación.' }, { question: '¿Puedo cambiar de plan después?', answer: 'Sí. El área de cuenta de Brew Pilot permite consultar las opciones disponibles e iniciar el cambio.' }, { question: '¿Dónde se contrata?', answer: 'El registro, inicio de sesión, cobro y contratación ocurren en la aplicación Brew Pilot. El sitio presenta la propuesta y te lleva allí.' }, { question: '¿Qué cambia en Pro?', answer: 'Pro reúne las capacidades de Plus y añade Mr. Hoppin, exportaciones y calculadoras avanzadas de la aplicación.' }] },
+    compare: { ...content['pt-BR'].compare, meta: { ...content['pt-BR'].compare.meta, title: 'Comparar | Brew Pilot', description: 'Entiende la propuesta de Brew Pilot para conectar planificación, elaboración y aprendizaje.', heading: 'Compara propuestas. Elige el proceso que tiene sentido para ti.', eyebrow: 'Comparar' }, intro: 'Brew Pilot no necesita disminuir otras herramientas para explicar su foco.', cta: 'Explorar la plataforma', secondary: 'Ver herramientas' },
+    tools: { ...content['pt-BR'].tools, meta: { ...content['pt-BR'].tools.meta, title: 'Herramientas | Brew Pilot', description: 'Conoce las herramientas cerveceras planeadas para Brew Pilot.', heading: 'Herramientas útiles, en el momento adecuado.', eyebrow: 'Herramientas' }, intro: 'Preparamos herramientas que ayudan a responder preguntas prácticas sin separar el cálculo del contexto.', cta: 'Explorar la plataforma', secondary: 'Volver al producto' },
+    about: { ...content['pt-BR'].about, meta: { ...content['pt-BR'].about.meta, title: 'Sobre Brew Pilot', description: 'Conoce la visión de Brew Pilot para ayudar a aprender de cada lote.', heading: 'Tecnología para observar lo que enseña la elaboración.', eyebrow: 'Sobre Brew Pilot' }, intro: 'Brew Pilot nació para hacer el proceso cervecero más observable sin quitarle su parte manual.', cta: 'Explorar la plataforma', secondary: 'Contactar soporte' },
+    contact: { ...content['pt-BR'].contact, meta: { ...content['pt-BR'].contact.meta, title: 'Contacto | Brew Pilot', description: 'Encuentra el canal de soporte de Brew Pilot y sigue la integración de contacto.', heading: 'Mantengamos abierto el canal.', eyebrow: 'Contacto y soporte' }, intro: 'El soporte se configura por entorno. El formulario conectado a la API de Brew Pilot está en preparación.', cta: 'Explorar la plataforma', secondary: 'Volver al inicio' },
+    comparison: { ...content['pt-BR'].comparison, meta: { ...content['pt-BR'].comparison.meta, title: 'Comparativa en preparación | Brew Pilot', description: 'Esta página comparativa está en preparación y no está disponible para indexación.', heading: 'Comparativa en preparación.', eyebrow: 'Borrador' }, intro: 'La página se publicará cuando cada afirmación tenga una fuente oficial y revisión de contenido.', cta: 'Volver a comparar', secondary: 'Explorar la plataforma' },
+  },
+}
+
+for (const locale of ['en-US', 'es'] as Locale[]) {
+  content[locale] = {} as Record<MarketingPageKind, PageCopy>
+  for (const kind of Object.keys(content['pt-BR']) as MarketingPageKind[]) {
+    content[locale][kind] = localizedOverrides[locale][kind] || content['pt-BR'][kind]
+  }
+}
+
+const localizedSections: Record<'en-US' | 'es', Partial<Record<MarketingPageKind, Array<[string, string]>>>> = {
+  'en-US': {
+    features: [['Plan before the kettle', 'Recipes, profiles, and important decisions start with a structure you can review.'], ['Brew with a clear plan', 'Brew Day takes what you planned into the moment when each choice matters.'], ['Record what happened', 'Batch and history create a practical memory for the next version.'], ['Evolve with evidence', 'Compare the result with what you intended and adjust with more confidence.']],
+    pricing: [['More clarity before the batch', 'Plan better before brew day and enter the batch knowing what matters.'], ['More memory after the batch', 'History and versioning make every brew a source for the next one.'], ['Subscription details in the app', 'The app plan area shows the options available for your account.']],
+    compare: [['Less context switching', 'Recipe, equipment, batch, and history live in one line of work.'], ['More context to learn', 'The goal is not more screens. It is a better-informed next decision.'], ['Specific comparisons in preparation', 'Individual pages will go live only when official, verifiable sources exist for every claim.']],
+    tools: [['ABV calculator', 'Estimate recipe alcohol with the data already part of your process.'], ['IBU calculator', 'Organize bitterness contribution without losing sight of the full recipe.'], ['Priming calculator', 'Plan carbonation as part of the batch, not as an isolated step.']],
+    about: [['Beer is practice and memory', 'A good tool respects the bench, the time, and the decisions of the person making it.'], ['Clarity before complexity', 'We start with the line of thinking that helps make the next brew better.'], ['Built in cycles', 'The product grows through real questions, honest records, and room to learn.']],
+    contact: [['Support by email', 'When available, the configured address appears here to guide your message.'], ['Integration in preparation', 'We do not simulate sending. The public contact API will define endpoint, security, and responses first.']],
+  },
+  es: {
+    features: [['Planifica antes de abrir la olla', 'Las recetas, perfiles y decisiones importantes empiezan con una estructura que puedes revisar.'], ['Elabora con un plan claro', 'Brew Day lleva lo planificado al momento en que cada decisión importa.'], ['Registra lo que ocurrió', 'El lote y el historial crean una memoria práctica para la próxima versión.'], ['Evoluciona con evidencia', 'Compara el resultado con lo que querías hacer y ajusta con más confianza.']],
+    pricing: [['Más claridad antes del lote', 'Planifica mejor antes de elaborar y llega al lote sabiendo qué importa.'], ['Más memoria después del lote', 'El historial y las versiones convierten cada elaboración en una fuente para la siguiente.'], ['Detalles de suscripción en la app', 'El área de planes de la aplicación muestra las opciones de tu cuenta.']],
+    compare: [['Menos cambios de contexto', 'La receta, el equipo, el lote y el historial viven en una misma línea de trabajo.'], ['Más contexto para aprender', 'El objetivo no es acumular pantallas. Es informar mejor la próxima decisión.'], ['Comparativas en preparación', 'Las páginas individuales se publicarán cuando existan fuentes oficiales y verificables para cada afirmación.']],
+    tools: [['Calculadora de ABV', 'Estima el alcohol de la receta con los datos que ya forman parte de tu proceso.'], ['Calculadora de IBU', 'Organiza el amargor sin perder de vista la receta completa.'], ['Calculadora de priming', 'Planifica la carbonatación como parte del lote, no como un paso aislado.']],
+    about: [['La cerveza es práctica y memoria', 'Una buena herramienta respeta la mesa de trabajo, el tiempo y las decisiones de quien elabora.'], ['Claridad antes que complejidad', 'Empezamos por la línea de razonamiento que ayuda a mejorar la próxima elaboración.'], ['Construido en ciclos', 'El producto crece con preguntas reales, registros honestos y espacio para aprender.']],
+    contact: [['Soporte por correo', 'Cuando esté disponible, la dirección configurada aparecerá aquí para orientar tu mensaje.'], ['Integración en preparación', 'No simulamos envíos. La API pública de contacto definirá primero el endpoint, la seguridad y las respuestas.']],
+  },
+}
+
+const translatedMedia = (locale: 'en-US' | 'es', media: ScreenshotProps[]): ScreenshotProps[] => media.map((item) => ({
+  ...item,
+  label: locale === 'en-US' ? `Screenshot placeholder: ${item.id.replaceAll('-', ' ')}` : `Placeholder de captura: ${item.id.replaceAll('-', ' ')}`,
+  alt: locale === 'en-US' ? `Reserved space for the ${item.id.replaceAll('-', ' ')} screenshot` : `Espacio reservado para la captura de ${item.id.replaceAll('-', ' ')}`,
+}))
+
+for (const locale of ['en-US', 'es'] as const) {
+  for (const kind of Object.keys(content[locale]) as MarketingPageKind[]) {
+    const copy = content[locale][kind]
+    const pairs = localizedSections[locale][kind]
+    if (copy && pairs) copy.sections = pairs.map(([title, body]) => ({ title, body }))
+    if (copy) copy.screenshots = translatedMedia(locale, copy.screenshots)
+  }
+}
+
+export const getUi = (locale: Locale): UiCopy => baseUi[locale]
+export const getPageCopy = (locale: Locale, kind: MarketingPageKind): PageCopy => content[locale][kind] || content['pt-BR']['not-found']
+export const supportedLocales: Locale[] = ['pt-BR', 'en-US', 'es']

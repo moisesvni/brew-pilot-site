@@ -8,10 +8,12 @@ RUN npm ci
 
 COPY . .
 
-ARG VITE_MODE=dev
+ARG VITE_MODE=production
 ENV VITE_MODE=${VITE_MODE}
+ARG VITE_SITE_URL=https://brewpilot.com
+ENV VITE_SITE_URL=${VITE_SITE_URL}
 
-RUN npx vite build --mode ${VITE_MODE}
+RUN npm run build -- --mode ${VITE_MODE}
 
 
 FROM nginx:alpine AS runtime

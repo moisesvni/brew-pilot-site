@@ -5,13 +5,20 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vue-tsc -b && vite build",
-    "preview": "vite preview"
+    "prebuild": "node scripts/generate-seo.mjs",
+    "build": "vue-tsc -b && vite-ssg build",
+    "preview": "vite preview",
+    "test:e2e": "playwright test"
   },
   "dependencies": {
-    "vue": "^3.5.41"
+    "@unhead/vue": "^2.1.17",
+    "vite-ssg": "^28.3.0",
+    "vue": "^3.5.41",
+    "vue-i18n": "^11.4.10",
+    "vue-router": "^4.6.4"
   },
   "devDependencies": {
+    "@playwright/test": "^1.63.0",
     "@types/node": "^24.13.3",
     "@vitejs/plugin-vue": "^6.0.8",
     "@vue/tsconfig": "^0.9.1",

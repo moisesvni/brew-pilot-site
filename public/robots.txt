@@ -1,0 +1,12 @@
+User-agent: *
+Allow: /
+Disallow: /compare/brewfather
+Disallow: /compare/beersmith
+Disallow: /compare/brewers-friend
+Disallow: /en/compare/brewfather
+Disallow: /en/compare/beersmith
+Disallow: /en/compare/brewers-friend
+Disallow: /es/compare/brewfather
+Disallow: /es/compare/beersmith
+Disallow: /es/compare/brewers-friend
+Sitemap: https://brewpilot.com/sitemap.xml
