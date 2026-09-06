@@ -3,7 +3,7 @@ import { resolve } from 'node:path'
 
 const siteUrl = (process.env.VITE_SITE_URL || 'https://brewpilot.com').replace(/\/$/, '')
 const locales = ['', 'en', 'es']
-const slugs = ['', 'features', 'pricing', 'compare', 'tools', 'about', 'contact', 'privacy', 'cookies', 'terms']
+const slugs = ['', 'features', 'platform', 'pricing', 'about', 'contact', 'privacy', 'cookies', 'terms']
 
 const routePath = (locale, slug) => {
   const prefix = locale ? `/${locale}` : ''

@@ -9,6 +9,7 @@ export default defineConfig({
     includedRoutes: () => [
       '/',
       '/features',
+      '/platform',
       '/pricing',
       '/compare',
       '/tools',
@@ -22,6 +23,7 @@ export default defineConfig({
       '/compare/brewers-friend',
       '/en',
       '/en/features',
+      '/en/platform',
       '/en/pricing',
       '/en/compare',
       '/en/tools',
@@ -35,6 +37,7 @@ export default defineConfig({
       '/en/compare/brewers-friend',
       '/es',
       '/es/features',
+      '/es/platform',
       '/es/pricing',
       '/es/compare',
       '/es/tools',

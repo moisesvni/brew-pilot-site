@@ -33,17 +33,16 @@ const languages: Locale[] = ['pt-BR', 'en-US', 'es']
         <a class="brand" :href="pageLink('')" aria-label="Brew Pilot">
           <img :src="logo" alt="Brew Pilot" width="196" height="48" />
         </a>
-        <span class="footer-status">{{ t('footer.status') }}</span>
+        <span class="footer-brand-note"><i aria-hidden="true"></i>{{ t('footer.status') }}</span>
         <p>{{ t('footer.tagline') }}</p>
       </div>
       <div class="footer-column">
         <h2><span>01</span>{{ t('footer.product') }}</h2>
         <a :href="pageLink('features')">{{ t('nav.product') }}</a>
-        <a :href="pageLink('tools')">{{ t('nav.tools') }}</a>
-        <a :href="pageLink('compare')">{{ t('nav.compare') }}</a>
+        <a :href="pageLink('platform')">{{ t('nav.platform') }}</a>
       </div>
       <div class="footer-column">
-        <h2><span>02</span>{{ t('footer.resources') }}</h2>
+        <h2><span>02</span>{{ t('footer.navigation') }}</h2>
         <a :href="pageLink('pricing')">{{ t('nav.pricing') }}</a>
         <a :href="`${pageLink('pricing')}#faq`">{{ t('common.faq') }}</a>
         <a :href="pageLink('about')">{{ t('footer.about') }}</a>
@@ -58,7 +57,6 @@ const languages: Locale[] = ['pt-BR', 'en-US', 'es']
     </div>
     <div class="footer-bottom">
       <span>© {{ new Date().getFullYear() }} Brew Pilot</span>
-      <span class="footer-bottom-note">{{ t('footer.status') }}</span>
       <div class="footer-languages" :aria-label="t('common.language')">
         <span v-for="language in languages" :key="language" :class="{ active: language === locale }">{{ localeLabels[language] }}</span>
       </div>

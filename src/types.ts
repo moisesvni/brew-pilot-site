@@ -3,6 +3,7 @@ export type Locale = 'pt-BR' | 'en-US' | 'es'
 export type PageKind =
   | 'home'
   | 'features'
+  | 'platform'
   | 'pricing'
   | 'compare'
   | 'tools'
@@ -62,6 +63,7 @@ export const localeCode = (locale: Locale): string => {
 export const pageKindFromSlug = (slug?: string): PageKind => {
   if (!slug) return 'home'
   if (slug === 'features') return 'features'
+  if (slug === 'platform') return 'platform'
   if (slug === 'pricing') return 'pricing'
   if (slug === 'compare') return 'compare'
   if (slug === 'tools') return 'tools'

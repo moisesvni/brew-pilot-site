@@ -42,6 +42,7 @@ const connector = new BrewPilotAppConnector()
 const email = supportEmail()
 
 const localized = (slug: string): string => localizedPath(locale.value, slug)
+const heroSecondarySlug = computed(() => kind.value === 'platform' ? 'pricing' : 'features')
 const alternateLinks = computed(() => [
   { hreflang: 'pt-BR', href: `${siteUrl}${localizedPath('pt-BR', route.meta.slug as string || '')}` },
   { hreflang: 'en-US', href: `${siteUrl}${localizedPath('en-US', route.meta.slug as string || '')}` },
@@ -76,7 +77,7 @@ useHead(() => ({
 onMounted(() => {
   if (kind.value === 'home') trackMarketingEvent('landing_view', { locale: locale.value, page_path: route.path })
   if (kind.value === 'pricing') trackMarketingEvent('pricing_view', { locale: locale.value, page_path: route.path })
-  if (kind.value === 'compare') trackMarketingEvent('compare_view', { locale: locale.value, page_path: route.path })
+  if (kind.value === 'platform') trackMarketingEvent('platform_view', { locale: locale.value, page_path: route.path })
 })
 
 const openApp = (destination: 'register' | 'plans' | 'login'): void => {
@@ -100,7 +101,7 @@ const heroCta = (): void => {
         <p class="lead">{{ copy.intro }}</p>
         <div class="hero-actions">
           <button class="button" type="button" @click="heroCta">{{ copy.cta }}</button>
-          <a class="button button-quiet" :href="localized(kind === 'home' ? 'features' : '')">{{ copy.secondary || ui.nav.explore }}</a>
+          <a class="button button-quiet" :href="localized(heroSecondarySlug)">{{ copy.secondary || ui.nav.explore }}</a>
         </div>
         <p v-if="!connector.isConfigured && (kind === 'home' || kind === 'pricing')" class="configuration-note">{{ ui.common.appOnly }}</p>
       </div>
@@ -146,9 +147,9 @@ const heroCta = (): void => {
         <div class="assistant-mark" aria-label="Dr. Hoppin placeholder"><span>?</span><strong>DR. HOPPIN</strong><small>{{ ui.assistantPlaceholder }}</small></div>
       </section>
 
-      <section v-reveal class="compare-strip page-wrap">
-        <div><p class="eyebrow">{{ ui.nav.compare }}</p><h2>{{ copy.sections[6].title }}</h2><p>{{ copy.sections[6].body }}</p></div>
-        <div class="compare-pairs"><div v-for="item in ui.comparePairs" :key="item.label"><span>{{ item.label }}</span><strong>{{ item.value }}</strong></div></div>
+      <section v-reveal class="workflow-strip page-wrap">
+        <div><p class="eyebrow">{{ ui.nav.platform }}</p><h2>{{ copy.sections[6].title }}</h2><p>{{ copy.sections[6].body }}</p></div>
+        <div class="workflow-points"><div v-for="(step, index) in ui.cycle.slice(0, 4)" :key="step"><span>0{{ index + 1 }}</span><strong>{{ step }}</strong></div></div>
       </section>
 
       <section v-reveal class="value-section page-wrap" id="faq">
@@ -162,6 +163,21 @@ const heroCta = (): void => {
     <template v-else-if="kind === 'features'">
       <section v-reveal class="feature-anchors page-wrap"><a v-for="(section, index) in copy.sections" :key="section.title" :href="`#feature-${index + 1}`"><span>0{{ index + 1 }}</span>{{ section.title }}</a></section>
       <section v-for="(section, index) in copy.sections" v-reveal :id="`feature-${index + 1}`" :key="section.title" class="feature-row page-wrap" :class="{ reverse: index % 2 === 1 }"><div><p class="eyebrow">{{ ui.cycle[index] || ui.common.soon }}</p><h2>{{ section.title }}</h2><p>{{ section.body }}</p></div><ProductScreenshotPlaceholder v-if="copy.screenshots[index]" v-bind="copy.screenshots[index]" /></section>
+    </template>
+
+    <template v-else-if="kind === 'platform'">
+      <section v-reveal class="platform-intro page-wrap">
+        <div><h2>{{ ui.platformOverviewTitle }}</h2><p>{{ copy.intro }}</p></div>
+        <div class="platform-index" aria-hidden="true"><span>BP</span><b>BREW OS</b></div>
+      </section>
+      <section v-reveal class="platform-grid page-wrap" :aria-label="ui.common.productStories">
+        <article v-for="(section, index) in copy.sections" v-reveal :key="section.title" class="platform-card" :class="{ 'platform-card--accent': index === 2 }" :style="{ '--reveal-delay': `${index * 70}ms` }">
+          <div class="platform-card-top"><span>0{{ index + 1 }}</span><span>{{ ui.cycle[index] || ui.common.soon }}</span></div>
+          <h2>{{ section.title }}</h2>
+          <p>{{ section.body }}</p>
+          <ProductScreenshotPlaceholder v-if="copy.screenshots[index]" v-bind="copy.screenshots[index]" />
+        </article>
+      </section>
     </template>
 
     <template v-else-if="kind === 'pricing'">
@@ -188,7 +204,7 @@ const heroCta = (): void => {
         </div>
         <p class="pricing-disclaimer">{{ copy.sections[2].body }}</p>
       </section>
-      <section v-reveal class="pricing-faq page-wrap" id="faq"><div><p class="eyebrow">{{ ui.common.faq }}</p><h2>{{ ui.faqTitle }}</h2><p class="pricing-faq-intro">O app mostra os detalhes da sua conta para manter valores, limites e contratação sempre atualizados.</p></div><div class="faq-list"><details v-for="item in copy.faq" :key="item.question"><summary>{{ item.question }}</summary><p>{{ item.answer }}</p></details></div></section>
+      <section v-reveal class="pricing-faq page-wrap" id="faq"><div><p class="eyebrow">{{ ui.common.faq }}</p><h2>{{ ui.faqTitle }}</h2><p class="pricing-faq-intro">{{ ui.pricingFaqIntro }}</p></div><div class="faq-list"><details v-for="item in copy.faq" :key="item.question"><summary>{{ item.question }}</summary><p>{{ item.answer }}</p></details></div></section>
     </template>
 
     <template v-else-if="kind === 'tools'">

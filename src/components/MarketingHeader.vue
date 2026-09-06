@@ -41,19 +41,9 @@ const close = (): void => {
 
       <nav class="desktop-nav" :aria-label="t('nav.product')">
         <a :href="pageLink('features')">{{ t('nav.product') }}</a>
-        <a :href="pageLink('tools')">{{ t('nav.tools') }}</a>
-        <a :href="pageLink('compare')">{{ t('nav.compare') }}</a>
+        <a :href="pageLink('platform')">{{ t('nav.platform') }}</a>
         <a :href="pageLink('pricing')">{{ t('nav.pricing') }}</a>
-        <div class="nav-resource">
-          <button type="button" class="nav-link" aria-haspopup="true" @click="open = !open">
-            {{ t('nav.resources') }} <span aria-hidden="true">+</span>
-          </button>
-          <div v-if="open" class="resource-menu">
-            <a :href="pageLink('tools')" @click="close">{{ t('nav.tools') }}</a>
-            <a :href="`${pageLink('pricing')}#faq`" @click="close">{{ t('common.faq') }}</a>
-            <a :href="pageLink('compare')" @click="close">{{ t('nav.compare') }}</a>
-          </div>
-        </div>
+        <a :href="pageLink('about')">{{ t('footer.about') }}</a>
       </nav>
 
       <div class="header-actions">
@@ -75,8 +65,7 @@ const close = (): void => {
     <div v-if="open" class="mobile-panel">
       <nav :aria-label="t('nav.product')">
         <a :href="pageLink('features')" @click="close">{{ t('nav.product') }}</a>
-        <a :href="pageLink('tools')" @click="close">{{ t('nav.tools') }}</a>
-        <a :href="pageLink('compare')" @click="close">{{ t('nav.compare') }}</a>
+        <a :href="pageLink('platform')" @click="close">{{ t('nav.platform') }}</a>
         <a :href="pageLink('pricing')" @click="close">{{ t('nav.pricing') }}</a>
         <a :href="pageLink('about')" @click="close">{{ t('footer.about') }}</a>
       </nav>

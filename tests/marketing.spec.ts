@@ -1,7 +1,8 @@
 import { expect, test } from '@playwright/test'
 
-const publicRoutes = ['/', '/features', '/pricing', '/compare', '/tools', '/about', '/contact', '/en', '/es']
+const publicRoutes = ['/', '/features', '/platform', '/pricing', '/about', '/contact', '/en', '/es']
 const legalRoutes = ['/privacy', '/cookies', '/terms', '/en/privacy', '/es/privacy']
+const legacyRoutes = ['/compare', '/tools']
 const draftRoutes = ['/compare/brewfather', '/compare/beersmith', '/compare/brewers-friend']
 
 test.describe('marketing routes', () => {
@@ -24,6 +25,15 @@ test.describe('marketing routes', () => {
       expect(response?.status()).toBe(200)
       await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', 'noindex, nofollow')
       await expect(page.locator('h1')).toHaveText('Comparativo em preparação.')
+    })
+  }
+
+  for (const route of legacyRoutes) {
+    test(`${route} stays out of public index`, async ({ page }) => {
+      const response = await page.goto(route)
+      expect(response?.status()).toBe(200)
+      await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', 'noindex, nofollow')
+      await expect(page.locator('.desktop-nav')).not.toContainText(route === '/compare' ? 'Comparar' : 'Ferramentas')
     })
   }
 
@@ -51,6 +61,7 @@ test.describe('marketing interactions', () => {
     await page.goto('/')
     await page.getByRole('button', { name: 'Abrir menu' }).click()
     await expect(page.getByRole('navigation').last()).toContainText('Produto')
+    await expect(page.getByRole('navigation').last()).toContainText('Como funciona')
     await expect(page.getByRole('navigation').last()).toContainText('Preços')
     await expect(page.getByRole('button', { name: 'Começar grátis' }).last()).toBeVisible()
   })

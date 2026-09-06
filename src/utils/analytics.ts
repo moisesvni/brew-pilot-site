@@ -4,6 +4,7 @@ export type MarketingEvent =
   | 'pricing_view'
   | 'pricing_app_click'
   | 'compare_view'
+  | 'platform_view'
   | 'login_click'
 
 export interface MarketingEventParams {
