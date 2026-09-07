@@ -61,8 +61,9 @@ test.describe('marketing interactions', () => {
     await page.goto('/')
     await page.getByRole('button', { name: 'Abrir menu' }).click()
     await expect(page.getByRole('navigation').last()).toContainText('Produto')
-    await expect(page.getByRole('navigation').last()).toContainText('Como funciona')
     await expect(page.getByRole('navigation').last()).toContainText('Preços')
+    await expect(page.getByRole('navigation').last()).toContainText('Sobre')
+    await expect(page.getByRole('navigation').last()).toContainText('FAQ')
     await expect(page.getByRole('button', { name: 'Começar grátis' }).last()).toBeVisible()
   })
 
@@ -89,6 +90,21 @@ test.describe('marketing interactions', () => {
     await expect(plans.nth(0)).toContainText('R$ 0')
     await expect(plans.nth(1)).toContainText('R$ 9')
     await expect(plans.nth(2)).toContainText('R$ 19')
+  })
+
+  test('home keeps the primary story in one anchored page', async ({ page }) => {
+    await page.goto('/')
+    await expect(page.locator('.desktop-nav')).toHaveAttribute('aria-label', 'Produto')
+    await expect(page.locator('.desktop-nav a').nth(0)).toHaveAttribute('href', '#produto')
+    await expect(page.locator('.desktop-nav a').nth(1)).toHaveAttribute('href', '#precos')
+    await expect(page.locator('.desktop-nav a').nth(2)).toHaveAttribute('href', '#sobre')
+    await expect(page.locator('.desktop-nav a').nth(3)).toHaveAttribute('href', '#faq')
+    await expect(page.locator('.desktop-nav')).not.toContainText('Como funciona')
+    await expect(page.locator('#faq .eyebrow')).toHaveText('FAQ')
+    await expect(page.locator('.workflow-strip')).toHaveCount(0)
+    await expect(page.locator('.home-pricing .pricing-plan')).toHaveCount(3)
+    expect(await page.locator('.home-pricing .pricing-plan').evaluateAll((plans) => plans.map((plan) => plan.querySelectorAll('.pricing-feature-list li').length))).toEqual([6, 6, 6])
+    await expect(page.locator('#sobre')).toContainText('O sistema acompanha a cerveja')
   })
 
   test('home sections reveal when they enter the viewport', async ({ page }) => {

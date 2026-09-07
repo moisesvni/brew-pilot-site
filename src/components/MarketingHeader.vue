@@ -16,6 +16,7 @@ const slug = computed(() => (route.meta.slug as string | undefined) || '')
 const languages: Locale[] = ['pt-BR', 'en-US', 'es']
 
 const pageLink = (page: string): string => localizedPath(locale.value, page)
+const topicLink = (anchor: string): string => route.meta.kind === 'home' ? `#${anchor}` : `${pageLink('')}#${anchor}`
 const languageLink = (nextLocale: Locale): string => localizedPath(nextLocale, slug.value)
 
 const openApp = (destination: 'login' | 'register'): void => {
@@ -40,10 +41,10 @@ const close = (): void => {
       </a>
 
       <nav class="desktop-nav" :aria-label="t('nav.product')">
-        <a :href="pageLink('features')">{{ t('nav.product') }}</a>
-        <a :href="pageLink('platform')">{{ t('nav.platform') }}</a>
-        <a :href="pageLink('pricing')">{{ t('nav.pricing') }}</a>
-        <a :href="pageLink('about')">{{ t('footer.about') }}</a>
+        <a :href="topicLink('produto')">{{ t('nav.product') }}</a>
+        <a :href="topicLink('precos')">{{ t('nav.pricing') }}</a>
+        <a :href="topicLink('sobre')">{{ t('footer.about') }}</a>
+        <a :href="topicLink('faq')">{{ t('common.faq') }}</a>
       </nav>
 
       <div class="header-actions">
@@ -64,10 +65,10 @@ const close = (): void => {
 
     <div v-if="open" class="mobile-panel">
       <nav :aria-label="t('nav.product')">
-        <a :href="pageLink('features')" @click="close">{{ t('nav.product') }}</a>
-        <a :href="pageLink('platform')" @click="close">{{ t('nav.platform') }}</a>
-        <a :href="pageLink('pricing')" @click="close">{{ t('nav.pricing') }}</a>
-        <a :href="pageLink('about')" @click="close">{{ t('footer.about') }}</a>
+        <a :href="topicLink('produto')" @click="close">{{ t('nav.product') }}</a>
+        <a :href="topicLink('precos')" @click="close">{{ t('nav.pricing') }}</a>
+        <a :href="topicLink('sobre')" @click="close">{{ t('footer.about') }}</a>
+        <a :href="topicLink('faq')" @click="close">{{ t('common.faq') }}</a>
       </nav>
       <div class="mobile-actions">
         <button class="text-button" type="button" @click="openApp('login'); close()">{{ t('nav.login') }}</button>

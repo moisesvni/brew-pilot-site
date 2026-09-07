@@ -10,6 +10,7 @@ const route = useRoute()
 const { t } = useI18n()
 const locale = computed(() => route.meta.locale as Locale)
 const pageLink = (page: string): string => localizedPath(locale.value, page)
+const topicLink = (anchor: string): string => route.meta.kind === 'home' ? `#${anchor}` : `${pageLink('')}#${anchor}`
 const ctaHref = computed(() => brewPilotApp.isConfigured ? brewPilotApp.url('register') : pageLink('features'))
 const ctaLabel = computed(() => brewPilotApp.isConfigured ? t('nav.start') : t('footer.ctaAction'))
 const languages: Locale[] = ['pt-BR', 'en-US', 'es']
@@ -38,14 +39,14 @@ const languages: Locale[] = ['pt-BR', 'en-US', 'es']
       </div>
       <div class="footer-column">
         <h2><span>01</span>{{ t('footer.product') }}</h2>
-        <a :href="pageLink('features')">{{ t('nav.product') }}</a>
-        <a :href="pageLink('platform')">{{ t('nav.platform') }}</a>
+        <a :href="topicLink('produto')">{{ t('nav.product') }}</a>
+        <a :href="localizedPath(locale, 'platform')">{{ t('nav.platform') }}</a>
       </div>
       <div class="footer-column">
         <h2><span>02</span>{{ t('footer.navigation') }}</h2>
-        <a :href="pageLink('pricing')">{{ t('nav.pricing') }}</a>
-        <a :href="`${pageLink('pricing')}#faq`">{{ t('common.faq') }}</a>
-        <a :href="pageLink('about')">{{ t('footer.about') }}</a>
+        <a :href="topicLink('precos')">{{ t('nav.pricing') }}</a>
+        <a :href="topicLink('faq')">{{ t('common.faq') }}</a>
+        <a :href="topicLink('sobre')">{{ t('footer.about') }}</a>
         <a :href="pageLink('contact')">{{ t('footer.support') }}</a>
       </div>
       <div class="footer-column">

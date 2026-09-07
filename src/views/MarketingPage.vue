@@ -7,6 +7,7 @@ import { BrewPilotAppConnector, supportEmail } from '../utils/connector'
 import { trackMarketingEvent } from '../utils/analytics'
 import { localeCode, localeFromPath, localizedPath } from '../types'
 import ProductScreenshotPlaceholder from '../components/ProductScreenshotPlaceholder.vue'
+import PricingPlanCards from '../components/PricingPlanCards.vue'
 import logo from '../assets/logo-brew-right-full.png'
 
 const revealObservers = new WeakMap<HTMLElement, IntersectionObserver>()
@@ -43,6 +44,7 @@ const email = supportEmail()
 
 const localized = (slug: string): string => localizedPath(locale.value, slug)
 const heroSecondarySlug = computed(() => kind.value === 'platform' ? 'pricing' : 'features')
+const heroSecondaryHref = computed(() => kind.value === 'home' ? '#processo' : localized(heroSecondarySlug.value))
 const alternateLinks = computed(() => [
   { hreflang: 'pt-BR', href: `${siteUrl}${localizedPath('pt-BR', route.meta.slug as string || '')}` },
   { hreflang: 'en-US', href: `${siteUrl}${localizedPath('en-US', route.meta.slug as string || '')}` },
@@ -94,14 +96,14 @@ const heroCta = (): void => {
 
 <template>
   <main class="marketing-page">
-    <section class="hero page-wrap" :class="{ 'hero-draft': isDraft, 'hero-pricing': kind === 'pricing' }">
+    <section id="produto" class="hero page-wrap" :class="{ 'hero-draft': isDraft, 'hero-pricing': kind === 'pricing' }">
       <div class="hero-copy">
         <p class="eyebrow">{{ copy.meta.eyebrow }}</p>
         <h1>{{ copy.meta.heading }}</h1>
         <p class="lead">{{ copy.intro }}</p>
         <div class="hero-actions">
           <button class="button" type="button" @click="heroCta">{{ copy.cta }}</button>
-          <a class="button button-quiet" :href="localized(heroSecondarySlug)">{{ copy.secondary || ui.nav.explore }}</a>
+          <a class="button button-quiet" :href="heroSecondaryHref">{{ copy.secondary || ui.nav.explore }}</a>
         </div>
         <p v-if="!connector.isConfigured && (kind === 'home' || kind === 'pricing')" class="configuration-note">{{ ui.common.appOnly }}</p>
       </div>
@@ -113,7 +115,7 @@ const heroCta = (): void => {
     </section>
 
     <template v-if="kind === 'home'">
-      <section v-reveal class="cycle-section page-wrap" aria-labelledby="cycle-title">
+      <section id="processo" v-reveal class="cycle-section page-wrap" aria-labelledby="cycle-title">
         <div class="section-intro"><p class="eyebrow">{{ copy.sections[0].title }}</p><h2 id="cycle-title">{{ copy.sections[0].body }}</h2></div>
         <ol class="cycle-list">
           <li v-for="(step, index) in ui.cycle" :key="step" :class="{ featured: index === 0 }"><span>0{{ index + 1 }}</span><strong>{{ step }}</strong><em>{{ ui.cycleDescriptions[index] }}</em></li>
@@ -147,14 +149,20 @@ const heroCta = (): void => {
         <div class="assistant-mark" aria-label="Dr. Hoppin placeholder"><span>?</span><strong>DR. HOPPIN</strong><small>{{ ui.assistantPlaceholder }}</small></div>
       </section>
 
-      <section v-reveal class="workflow-strip page-wrap">
-        <div><p class="eyebrow">{{ ui.nav.platform }}</p><h2>{{ copy.sections[6].title }}</h2><p>{{ copy.sections[6].body }}</p></div>
-        <div class="workflow-points"><div v-for="(step, index) in ui.cycle.slice(0, 4)" :key="step"><span>0{{ index + 1 }}</span><strong>{{ step }}</strong></div></div>
+      <section id="sobre" v-reveal class="about-strip page-wrap" aria-labelledby="home-about-title">
+        <div><p class="eyebrow">{{ ui.footer.about }}</p><h2 id="home-about-title">{{ ui.homeAboutTitle }}</h2></div>
+        <div><p>{{ ui.homeAboutBody }}</p><a class="text-link" :href="localized('about')">{{ ui.homeAboutLink }} <span aria-hidden="true">↗</span></a></div>
+      </section>
+
+      <section id="precos" v-reveal class="home-pricing page-wrap" aria-labelledby="home-pricing-title">
+        <div class="section-intro"><p class="eyebrow">{{ ui.nav.pricing }}</p><h2 id="home-pricing-title">{{ ui.pricingPlansTitle }}</h2><p>{{ ui.homeValueBody }}</p></div>
+        <PricingPlanCards :plans="ui.pricingPlans" @select="openApp('plans')" />
+        <p class="pricing-disclaimer">{{ ui.pricingDisclaimer }}</p>
       </section>
 
       <section v-reveal class="value-section page-wrap" id="faq">
-        <div class="section-intro"><p class="eyebrow">{{ ui.nav.pricing }}</p><h2>{{ ui.homeValueTitle }}</h2><p>{{ ui.homeValueBody }}</p></div>
-        <div class="value-actions"><button class="button" type="button" @click="openApp('plans')">{{ ui.nav.pricing }}</button><div class="faq-list"><details v-for="item in copy.faq" :key="item.question"><summary>{{ item.question }}</summary><p>{{ item.answer }}</p></details></div></div>
+        <div class="section-intro"><p class="eyebrow">{{ ui.common.faq }}</p><h2>{{ ui.faqTitle }}</h2><p>{{ ui.pricingFaqIntro }}</p></div>
+        <div class="value-actions"><div class="faq-list"><details v-for="item in copy.faq" :key="item.question"><summary>{{ item.question }}</summary><p>{{ item.answer }}</p></details></div></div>
       </section>
 
       <section v-reveal class="final-cta page-wrap"><p class="eyebrow">Brew Pilot</p><h2>{{ ui.homeFinalTitle }}</h2><button class="button" type="button" @click="heroCta">{{ copy.cta }}</button></section>
@@ -192,17 +200,8 @@ const heroCta = (): void => {
           <div><h2 id="pricing-plans-title">{{ ui.pricingPlansTitle }}</h2></div>
           <span class="pricing-source">{{ ui.common.appOnly }}</span>
         </div>
-        <div class="pricing-plan-grid">
-          <article v-for="plan in ui.pricingPlans" v-reveal :key="plan.key" class="pricing-plan" :class="[`pricing-plan--${plan.key}`, { 'pricing-plan--featured': plan.featured }]" :style="{ '--reveal-delay': `${['free', 'plus', 'pro'].indexOf(plan.key) * 90}ms` }">
-            <div class="pricing-plan-top"><span class="pricing-plan-marker">{{ plan.marker }}</span><span class="pricing-plan-index">0{{ ['free', 'plus', 'pro'].indexOf(plan.key) + 1 }}</span></div>
-            <h3>{{ plan.name }}</h3>
-            <p class="pricing-plan-description">{{ plan.description }}</p>
-            <div class="pricing-plan-price"><strong>{{ plan.price }}</strong><span>{{ plan.cadence }}</span></div>
-            <ul class="pricing-feature-list"><li v-for="feature in plan.features" :key="feature"><span aria-hidden="true">+</span>{{ feature }}</li></ul>
-            <button class="button" type="button" @click="openApp('plans')">{{ plan.cta }}</button>
-          </article>
-        </div>
-        <p class="pricing-disclaimer">{{ copy.sections[2].body }}</p>
+        <PricingPlanCards :plans="ui.pricingPlans" @select="openApp('plans')" />
+        <p class="pricing-disclaimer">{{ ui.pricingDisclaimer }}</p>
       </section>
       <section v-reveal class="pricing-faq page-wrap" id="faq"><div><p class="eyebrow">{{ ui.common.faq }}</p><h2>{{ ui.faqTitle }}</h2><p class="pricing-faq-intro">{{ ui.pricingFaqIntro }}</p></div><div class="faq-list"><details v-for="item in copy.faq" :key="item.question"><summary>{{ item.question }}</summary><p>{{ item.answer }}</p></details></div></section>
     </template>
