@@ -17,6 +17,7 @@ const languages: Locale[] = ['pt-BR', 'en-US', 'es']
 
 const pageLink = (page: string): string => localizedPath(locale.value, page)
 const topicLink = (anchor: string): string => route.meta.kind === 'home' ? `#${anchor}` : `${pageLink('')}#${anchor}`
+const productLink = (): string => pageLink('features')
 const languageLink = (nextLocale: Locale): string => localizedPath(nextLocale, slug.value)
 
 const openApp = (destination: 'login' | 'register'): void => {
@@ -41,7 +42,7 @@ const close = (): void => {
       </a>
 
       <nav class="desktop-nav" :aria-label="t('nav.product')">
-        <a :href="topicLink('produto')">{{ t('nav.product') }}</a>
+        <a :href="productLink()">{{ t('nav.product') }}</a>
         <a :href="topicLink('precos')">{{ t('nav.pricing') }}</a>
         <a :href="topicLink('sobre')">{{ t('footer.about') }}</a>
         <a :href="topicLink('faq')">{{ t('common.faq') }}</a>
@@ -65,7 +66,7 @@ const close = (): void => {
 
     <div v-if="open" class="mobile-panel">
       <nav :aria-label="t('nav.product')">
-        <a :href="topicLink('produto')" @click="close">{{ t('nav.product') }}</a>
+        <a :href="productLink()" @click="close">{{ t('nav.product') }}</a>
         <a :href="topicLink('precos')" @click="close">{{ t('nav.pricing') }}</a>
         <a :href="topicLink('sobre')" @click="close">{{ t('footer.about') }}</a>
         <a :href="topicLink('faq')" @click="close">{{ t('common.faq') }}</a>

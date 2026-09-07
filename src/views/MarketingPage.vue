@@ -42,6 +42,30 @@ const siteUrl = (import.meta.env.VITE_SITE_URL || 'https://brewpilot.com').repla
 const connector = new BrewPilotAppConnector()
 const email = supportEmail()
 
+const productToolset = computed(() => ({
+  'pt-BR': {
+    eyebrow: 'O que você consegue fazer no app',
+    title: 'Ferramentas para planejar, executar e aprender com cada lote.',
+    body: 'O Brew Pilot organiza o trabalho da cervejaria em partes conectadas. Cada registro serve para preparar, acompanhar ou melhorar a próxima brassagem.',
+    items: [
+      ['Receitas e formulação', 'Crie receitas com maltes, lúpulos, leveduras, etapas de mostura e estimativas de OG, FG, ABV, IBU e cor.', 'Editor de receita, ingredientes, cálculos e faixas de estilo'],
+      ['Brew Day', 'Leve a receita para um checklist de brassagem com mostura, fervura, adições, timers e ajustes registrados no próprio lote.', 'Checklist, timers, adições e alterações do dia'],
+      ['Lotes e fermentação', 'Registre leituras, notas e etapas da fermentação. Compare versões para entender o que mudou entre uma brassagem e outra.', 'Histórico, medições, fermentação e versões'],
+      ['Estoque e custos', 'Acompanhe insumos disponíveis, consumo e custo por lote antes de colocar uma receita em produção.', 'Ingredientes, disponibilidade, consumo e custo'],
+      ['Perfis cervejeiros', 'Mantenha equipamento, água, mostura, fermentação e carbonatação ligados à receita que você está construindo.', 'Equipamento, água, mostura, fermentação e carbonatação'],
+      ['Exportações e calculadoras', 'Use calculadoras avançadas e exporte dados quando precisar levar a receita ou o histórico para outro fluxo.', 'PDF, BeerXML, JSON e calculadoras de mostura'],
+    ],
+  },
+  'en-US': {
+    eyebrow: 'What you can do in the app', title: 'Tools to plan, execute, and learn from every batch.', body: 'Brew Pilot organizes brewery work into connected parts. Every record helps prepare, track, or improve the next brew.',
+    items: [['Recipes and formulation', 'Create recipes with malts, hops, yeast, mash steps, and OG, FG, ABV, IBU, and color estimates.', 'Recipe editor, ingredients, calculations, and style ranges'], ['Brew Day', 'Take the recipe into a brew-day checklist with mash, boil, additions, timers, and adjustments recorded on the batch.', 'Checklist, timers, additions, and day-of changes'], ['Batches and fermentation', 'Record readings, notes, and fermentation stages. Compare versions to understand what changed between brews.', 'History, readings, fermentation, and versions'], ['Inventory and costs', 'Track available ingredients, consumption, and batch cost before putting a recipe into production.', 'Ingredients, availability, consumption, and cost'], ['Brewing profiles', 'Keep equipment, water, mash, fermentation, and carbonation connected to the recipe you are building.', 'Equipment, water, mash, fermentation, and carbonation'], ['Exports and calculators', 'Use advanced calculators and export data when you need to take a recipe or history into another workflow.', 'PDF, BeerXML, JSON, and mash calculators']],
+  },
+  es: {
+    eyebrow: 'Lo que puedes hacer en la app', title: 'Herramientas para planificar, ejecutar y aprender de cada lote.', body: 'Brew Pilot organiza el trabajo cervecero en partes conectadas. Cada registro ayuda a preparar, acompañar o mejorar la próxima elaboración.',
+    items: [['Recetas y formulación', 'Crea recetas con maltas, lúpulos, levaduras, etapas de maceración y estimaciones de OG, FG, ABV, IBU y color.', 'Editor de recetas, ingredientes, cálculos y rangos de estilo'], ['Brew Day', 'Lleva la receta a un checklist con maceración, hervor, adiciones, temporizadores y ajustes registrados en el lote.', 'Checklist, temporizadores, adiciones y cambios del día'], ['Lotes y fermentación', 'Registra lecturas, notas y etapas de fermentación. Compara versiones para entender qué cambió entre elaboraciones.', 'Historial, mediciones, fermentación y versiones'], ['Inventario y costes', 'Acompaña ingredientes disponibles, consumo y coste por lote antes de producir una receta.', 'Ingredientes, disponibilidad, consumo y coste'], ['Perfiles cerveceros', 'Mantén equipo, agua, maceración, fermentación y carbonatación conectados a la receta que estás creando.', 'Equipo, agua, maceración, fermentación y carbonatación'], ['Exportaciones y calculadoras', 'Usa calculadoras avanzadas y exporta datos cuando necesites llevar una receta o historial a otro flujo.', 'PDF, BeerXML, JSON y calculadoras de maceración']],
+  },
+}[locale.value]))
+
 const localized = (slug: string): string => localizedPath(locale.value, slug)
 const heroSecondarySlug = computed(() => kind.value === 'platform' ? 'pricing' : 'features')
 const heroSecondaryHref = computed(() => kind.value === 'home' ? '#processo' : localized(heroSecondarySlug.value))
@@ -96,7 +120,7 @@ const heroCta = (): void => {
 
 <template>
   <main class="marketing-page">
-    <section id="produto" class="hero page-wrap" :class="{ 'hero-draft': isDraft, 'hero-pricing': kind === 'pricing' }">
+    <section id="produto" class="hero page-wrap" :class="{ 'hero-draft': isDraft, 'hero-home': kind === 'home', 'hero-pricing': kind === 'pricing' }">
       <div class="hero-copy">
         <p class="eyebrow">{{ copy.meta.eyebrow }}</p>
         <h1>{{ copy.meta.heading }}</h1>
@@ -107,11 +131,7 @@ const heroCta = (): void => {
         </div>
         <p v-if="!connector.isConfigured && (kind === 'home' || kind === 'pricing')" class="configuration-note">{{ ui.common.appOnly }}</p>
       </div>
-      <div v-if="kind === 'home'" class="hero-media">
-        <ProductScreenshotPlaceholder v-for="media in copy.screenshots.slice(0, 1)" :key="media.id" v-bind="media" />
-        <div class="hero-stamp" aria-hidden="true"><span>BREW</span><strong>PILOT</strong></div>
-      </div>
-      <div v-else class="hero-index" aria-hidden="true"><span>BP</span><b>{{ String(kind).toUpperCase() }}</b></div>
+      <div v-if="kind !== 'home'" class="hero-index" aria-hidden="true"><span>BP</span><b>{{ String(kind).toUpperCase() }}</b></div>
     </section>
 
     <template v-if="kind === 'home'">
@@ -122,31 +142,14 @@ const heroCta = (): void => {
         </ol>
       </section>
 
-      <section v-reveal class="story-grid page-wrap" :aria-label="ui.common.productStories">
-        <article v-reveal class="story story-wide">
-          <div><p class="eyebrow">{{ copy.sections[1].title }}</p><h2>{{ copy.sections[1].body }}</h2></div>
-          <ProductScreenshotPlaceholder v-bind="copy.screenshots[2]" />
-        </article>
-        <article v-reveal class="story story-tall" style="--reveal-delay: 90ms">
-          <ProductScreenshotPlaceholder v-bind="copy.screenshots[1]" />
-          <div><h2>{{ copy.sections[2].title }}</h2><p>{{ copy.sections[2].body }}</p></div>
-        </article>
-        <article v-reveal class="story story-wide story-reverse" style="--reveal-delay: 150ms">
-          <div><h2>{{ copy.sections[3].title }}</h2><p>{{ copy.sections[3].body }}</p></div>
-          <ProductScreenshotPlaceholder v-bind="copy.screenshots[6]" />
-        </article>
-      </section>
-
-      <section v-reveal class="bento-section page-wrap" aria-labelledby="ecosystem-title">
-        <div class="section-intro"><p class="eyebrow">{{ copy.sections[4].title }}</p><h2 id="ecosystem-title">{{ copy.sections[4].body }}</h2></div>
-        <div class="bento-grid">
-          <article v-for="(item, index) in ui.bento" v-reveal :key="item.title" :style="{ '--reveal-delay': `${index * 90}ms` }" :class="{ 'bento-accent': index === 1 }"><span class="bento-number">0{{ index + 1 }}</span><h3>{{ item.title }}</h3><p>{{ item.body }}</p></article>
+      <section id="ferramentas" v-reveal class="product-toolset page-wrap" aria-labelledby="toolset-title">
+        <div class="toolset-intro"><p class="eyebrow">{{ productToolset.eyebrow }}</p><h2 id="toolset-title">{{ productToolset.title }}</h2><p>{{ productToolset.body }}</p></div>
+        <div class="toolset-grid">
+          <article v-for="(item, index) in productToolset.items" v-reveal :key="item[0]" :style="{ '--reveal-delay': `${index * 55}ms` }">
+            <span>0{{ index + 1 }}</span><h3>{{ item[0] }}</h3><p>{{ item[1] }}</p><small>{{ item[2] }}</small>
+          </article>
         </div>
-      </section>
-
-      <section v-reveal class="assistant-section page-wrap">
-        <div class="assistant-copy"><p class="eyebrow">{{ copy.sections[5].title }}</p><h2>{{ copy.sections[5].body }}</h2><span class="soon-label">{{ ui.common.soon }}</span></div>
-        <div class="assistant-mark" aria-label="Dr. Hoppin placeholder"><span>?</span><strong>DR. HOPPIN</strong><small>{{ ui.assistantPlaceholder }}</small></div>
+        <a class="text-link toolset-link" :href="localized('features')">{{ ui.nav.product }} <span aria-hidden="true">↗</span></a>
       </section>
 
       <section id="sobre" v-reveal class="about-strip page-wrap" aria-labelledby="home-about-title">

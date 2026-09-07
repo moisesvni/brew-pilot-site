@@ -50,10 +50,11 @@ test.describe('marketing routes', () => {
 })
 
 test.describe('marketing interactions', () => {
-  test('bento accent card keeps readable text', async ({ page }) => {
+  test('product toolset exposes concrete Brew Pilot capabilities', async ({ page }) => {
     await page.goto('/')
-    const paragraph = page.locator('.bento-accent p')
-    await expect(paragraph).toHaveCSS('color', 'rgb(21, 23, 25)')
+    await expect(page.locator('.toolset-grid article')).toHaveCount(6)
+    await expect(page.locator('.toolset-grid')).toContainText('Receitas e formulação')
+    await expect(page.locator('.toolset-grid')).toContainText('Estoque e custos')
   })
 
   test('mobile menu exposes the primary destinations', async ({ page }) => {
@@ -95,13 +96,14 @@ test.describe('marketing interactions', () => {
   test('home keeps the primary story in one anchored page', async ({ page }) => {
     await page.goto('/')
     await expect(page.locator('.desktop-nav')).toHaveAttribute('aria-label', 'Produto')
-    await expect(page.locator('.desktop-nav a').nth(0)).toHaveAttribute('href', '#produto')
+    await expect(page.locator('.desktop-nav a').nth(0)).toHaveAttribute('href', '/features')
     await expect(page.locator('.desktop-nav a').nth(1)).toHaveAttribute('href', '#precos')
     await expect(page.locator('.desktop-nav a').nth(2)).toHaveAttribute('href', '#sobre')
     await expect(page.locator('.desktop-nav a').nth(3)).toHaveAttribute('href', '#faq')
     await expect(page.locator('.desktop-nav')).not.toContainText('Como funciona')
     await expect(page.locator('#faq .eyebrow')).toHaveText('FAQ')
-    await expect(page.locator('.workflow-strip')).toHaveCount(0)
+    await expect(page.locator('.screenshot-placeholder')).toHaveCount(0)
+    await expect(page.locator('.toolset-grid article')).toHaveCount(6)
     await expect(page.locator('.home-pricing .pricing-plan')).toHaveCount(3)
     expect(await page.locator('.home-pricing .pricing-plan').evaluateAll((plans) => plans.map((plan) => plan.querySelectorAll('.pricing-feature-list li').length))).toEqual([6, 6, 6])
     await expect(page.locator('#sobre')).toContainText('O sistema acompanha a cerveja')
