@@ -77,4 +77,4 @@ export const pageKindFromSlug = (slug?: string): PageKind => {
 }
 
 export const appUrlFromEnv = (): string =>
-  (import.meta.env.VITE_BREW_PILOT_APP_URL || '').replace(/\/$/, '').replace(/#.*$/, '')
+  (import.meta.env.VITE_BREW_PILOT_APP_URL || 'https://dev-app.brewpilot.com.br').replace(/\/$/, '').replace(/#.*$/, '')

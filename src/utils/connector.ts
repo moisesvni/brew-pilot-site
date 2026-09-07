@@ -24,6 +24,7 @@ export class BrewPilotAppConnector {
 
   url(destination: AppDestination): string {
     if (!this.origin) return ''
+    if (destination === 'register') return `${this.origin}/`
     return `${this.origin}/#/${paths[destination]}`
   }
 }
