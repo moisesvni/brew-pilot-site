@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted, ref } from 'vue'
+import { mdiCalendarClock, mdiChartLine, mdiClipboardCheckOutline, mdiFileDocumentOutline, mdiFlaskOutline, mdiPackageVariantClosed, mdiSourceBranch, mdiThermometer, mdiTuneVariant } from '@mdi/js'
 import { useRoute } from 'vue-router'
 import { useHead } from '@unhead/vue'
 import { getPageCopy, getUi, type MarketingPageKind } from '../content'
@@ -10,6 +11,13 @@ import ProductScreenshotPlaceholder from '../components/ProductScreenshotPlaceho
 import PricingPlanCards from '../components/PricingPlanCards.vue'
 import logo from '../assets/logo-brew-right-full.png'
 import brewStamp from '../assets/logo-brew-withe.png'
+import recipeCardArt from '../assets/back-recipe.png'
+import inventoryCardArt from '../assets/back-inventory.png'
+import profileCardArt from '../assets/back-profile.png'
+import batchCardArt from '../assets/back-lote.png'
+import fermentationCardArt from '../assets/back-fermentable.png'
+import versionCardArt from '../assets/back-version.png'
+import aboutArt from '../assets/back-sobre.png'
 import productPrintLight from '../assets/print-recipe-ligth.png'
 import productPrintDark from '../assets/print-recipe-back.png'
 
@@ -74,6 +82,9 @@ const heroHeadingLines = computed(() => {
   const words = copy.value.meta.heading.split(' ')
   return { first: words.slice(0, 3).join(' '), second: words.slice(3).join(' ') }
 })
+const toolsetIcons = [mdiFileDocumentOutline, mdiPackageVariantClosed, mdiTuneVariant, mdiClipboardCheckOutline, mdiThermometer, mdiSourceBranch]
+const cycleIcons = [mdiFileDocumentOutline, mdiCalendarClock, mdiFlaskOutline, mdiThermometer, mdiChartLine, mdiSourceBranch]
+const toolsetCardArt = [recipeCardArt, inventoryCardArt, profileCardArt, batchCardArt, fermentationCardArt, versionCardArt]
 
 const localized = (slug: string): string => localizedPath(locale.value, slug)
 const heroSecondarySlug = computed(() => kind.value === 'platform' ? 'pricing' : 'features')
@@ -161,21 +172,24 @@ const heroCta = (): void => {
         </div>
         <div class="section-intro"><p class="eyebrow">{{ copy.sections[0].title }}</p><h2 id="cycle-title">{{ copy.sections[0].body }}</h2></div>
         <ol class="cycle-list">
-          <li v-for="(step, index) in ui.cycle" :key="step" :class="{ featured: index === 0 }"><span>0{{ index + 1 }}</span><strong>{{ step }}</strong><em>{{ ui.cycleDescriptions[index] }}</em></li>
+          <li v-for="(step, index) in ui.cycle" :key="step" :class="{ featured: index === 0 }"><svg class="cycle-icon" aria-hidden="true" viewBox="0 0 24 24"><path :d="cycleIcons[index]" /></svg><span>0{{ index + 1 }}</span><strong>{{ step }}</strong><em>{{ ui.cycleDescriptions[index] }}</em></li>
         </ol>
       </section>
 
       <section id="ferramentas" v-reveal class="product-toolset page-wrap" aria-labelledby="toolset-title">
         <div class="toolset-intro"><p class="eyebrow">{{ productToolset.eyebrow }}</p><h2 id="toolset-title">{{ productToolset.title }}</h2><p>{{ productToolset.body }}</p></div>
         <div class="toolset-grid">
-          <article v-for="(item, index) in productToolset.items" v-reveal :key="item[0]" :style="{ '--reveal-delay': `${index * 55}ms` }">
-            <span>0{{ index + 1 }}</span><h3>{{ item[0] }}</h3><p>{{ item[1] }}</p><small>{{ item[2] }}</small>
+          <article v-for="(item, index) in productToolset.items" :id="['receitas-formulacao', 'estoque-custos', 'perfis-producao', 'lotes-brew-day'][index]" v-reveal :key="item[0]" :style="{ '--reveal-delay': `${index * 55}ms` }">
+            <div class="toolset-card-top"><span>0{{ index + 1 }}</span><svg class="toolset-icon" aria-hidden="true" viewBox="0 0 24 24"><path :d="toolsetIcons[index]" /></svg></div>
+            <div class="toolset-card-art" aria-hidden="true"><img :src="toolsetCardArt[index]" alt="" loading="lazy" /></div>
+            <h3>{{ item[0] }}</h3><p>{{ item[1] }}</p><small>{{ item[2] }}</small><i class="toolset-arrow" aria-hidden="true">↗</i>
           </article>
         </div>
         <a class="text-link toolset-link" :href="localized('features')">{{ ui.nav.product }} <span aria-hidden="true">↗</span></a>
       </section>
 
       <section id="sobre" v-reveal class="about-strip page-wrap" aria-labelledby="home-about-title">
+        <img class="about-art" :src="aboutArt" alt="" aria-hidden="true" loading="lazy" />
         <div><p class="eyebrow">{{ ui.footer.about }}</p><h2 id="home-about-title">{{ ui.homeAboutTitle }}</h2></div>
         <div><p>{{ ui.homeAboutBody }}</p><a class="text-link" :href="localized('about')">{{ ui.homeAboutLink }} <span aria-hidden="true">↗</span></a></div>
       </section>
@@ -191,7 +205,6 @@ const heroCta = (): void => {
         <div class="value-actions"><div class="faq-list"><details v-for="item in copy.faq" :key="item.question"><summary>{{ item.question }}</summary><p>{{ item.answer }}</p></details></div></div>
       </section>
 
-      <section v-reveal class="final-cta page-wrap"><p class="eyebrow">Brew Pilot</p><h2>{{ ui.homeFinalTitle }}</h2><button class="button" type="button" @click="heroCta">{{ copy.cta }}</button></section>
     </template>
 
     <template v-else-if="kind === 'features'">

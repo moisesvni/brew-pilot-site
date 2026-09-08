@@ -16,7 +16,7 @@ const localeRoute = (locale: Locale, slug: string, indexable = true, component =
   },
 })
 
-const publicSlugs = ['', 'features', 'platform', 'pricing', 'about', 'contact']
+const publicSlugs = ['', 'produto', 'features', 'platform', 'pricing', 'about', 'contact']
 const legacySlugs = ['compare', 'tools']
 const legalSlugs = ['privacy', 'cookies', 'terms']
 const comparisonSlugs = ['compare/brewfather', 'compare/beersmith', 'compare/brewers-friend']

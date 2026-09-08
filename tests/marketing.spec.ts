@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test'
 
-const publicRoutes = ['/', '/features', '/platform', '/pricing', '/about', '/contact', '/en', '/es']
+const publicRoutes = ['/', '/produto', '/features', '/platform', '/pricing', '/about', '/contact', '/en', '/es']
 const legalRoutes = ['/privacy', '/cookies', '/terms', '/en/privacy', '/es/privacy']
 const legacyRoutes = ['/compare', '/tools']
 const draftRoutes = ['/compare/brewfather', '/compare/beersmith', '/compare/brewers-friend']
@@ -61,17 +61,27 @@ test.describe('marketing interactions', () => {
     await page.setViewportSize({ width: 390, height: 844 })
     await page.goto('/')
     await page.getByRole('button', { name: 'Abrir menu' }).click()
-    await expect(page.getByRole('navigation').last()).toContainText('Produto')
-    await expect(page.getByRole('navigation').last()).toContainText('Preços')
-    await expect(page.getByRole('navigation').last()).toContainText('Sobre')
-    await expect(page.getByRole('navigation').last()).toContainText('FAQ')
+    const mobileNav = page.locator('.mobile-panel nav')
+    await expect(mobileNav).toContainText('Como funciona')
+    await expect(mobileNav).toContainText('Módulos')
+    await expect(mobileNav).toContainText('Produto')
+    await expect(mobileNav).toContainText('Preços')
+    await expect(mobileNav).toContainText('Sobre')
     await expect(page.getByRole('button', { name: 'Começar grátis' }).last()).toBeVisible()
   })
 
   test('language switch preserves the current page', async ({ page }) => {
     await page.goto('/pricing')
-    await page.getByRole('link', { name: 'EN', exact: true }).click()
+    await page.locator('.language-switcher').getByRole('link', { name: 'EN', exact: true }).click()
     await expect(page).toHaveURL(/\/en\/pricing$/)
+  })
+
+  test('explore menu closes when the user clicks outside', async ({ page }) => {
+    await page.goto('/')
+    await page.getByRole('button', { name: /Explorar/ }).click()
+    await expect(page.locator('.resource-menu')).toBeVisible()
+    await page.locator('.hero').click({ position: { x: 20, y: 20 } })
+    await expect(page.locator('.resource-menu')).toBeHidden()
   })
 
   test('pricing FAQ opens an answer', async ({ page }) => {
@@ -81,31 +91,28 @@ test.describe('marketing interactions', () => {
     await expect(question.locator('..')).toHaveAttribute('open', '')
   })
 
-  test('pricing presents three plans with six features each', async ({ page }) => {
+  test('pricing presents the configured plans and features', async ({ page }) => {
     await page.goto('/pricing')
     const plans = page.locator('.pricing-plan')
     await expect(plans).toHaveCount(3)
     await expect(plans.nth(0).locator('.pricing-feature-list li')).toHaveCount(6)
     await expect(plans.nth(1).locator('.pricing-feature-list li')).toHaveCount(6)
-    await expect(plans.nth(2).locator('.pricing-feature-list li')).toHaveCount(6)
+    await expect(plans.nth(2).locator('.pricing-feature-list li')).toHaveCount(7)
     await expect(plans.nth(0)).toContainText('R$ 0')
-    await expect(plans.nth(1)).toContainText('R$ 9')
-    await expect(plans.nth(2)).toContainText('R$ 19')
+    await expect(plans.nth(1)).toContainText('R$ 19,90')
+    await expect(plans.nth(2)).toContainText('R$ 39,90')
   })
 
   test('home keeps the primary story in one anchored page', async ({ page }) => {
     await page.goto('/')
-    await expect(page.locator('.desktop-nav')).toHaveAttribute('aria-label', 'Produto')
-    await expect(page.locator('.desktop-nav a').nth(0)).toHaveAttribute('href', '/features')
-    await expect(page.locator('.desktop-nav a').nth(1)).toHaveAttribute('href', '#precos')
-    await expect(page.locator('.desktop-nav a').nth(2)).toHaveAttribute('href', '#sobre')
-    await expect(page.locator('.desktop-nav a').nth(3)).toHaveAttribute('href', '#faq')
-    await expect(page.locator('.desktop-nav')).not.toContainText('Como funciona')
+    await expect(page.locator('.desktop-nav')).toHaveAttribute('aria-label', 'Navegação principal')
+    await expect(page.getByRole('button', { name: /Explorar/ })).toBeVisible()
+    await expect(page.locator('.desktop-nav > a').first()).toHaveAttribute('href', '/produto')
     await expect(page.locator('#faq .eyebrow')).toHaveText('FAQ')
     await expect(page.locator('.screenshot-placeholder')).toHaveCount(0)
     await expect(page.locator('.toolset-grid article')).toHaveCount(6)
     await expect(page.locator('.home-pricing .pricing-plan')).toHaveCount(3)
-    expect(await page.locator('.home-pricing .pricing-plan').evaluateAll((plans) => plans.map((plan) => plan.querySelectorAll('.pricing-feature-list li').length))).toEqual([6, 6, 6])
+    expect(await page.locator('.home-pricing .pricing-plan').evaluateAll((plans) => plans.map((plan) => plan.querySelectorAll('.pricing-feature-list li').length))).toEqual([6, 6, 7])
     await expect(page.locator('#sobre')).toContainText('O sistema acompanha a cerveja')
   })
 
@@ -128,9 +135,9 @@ test.describe('marketing interactions', () => {
 
   test('footer exposes local legal pages', async ({ page }) => {
     await page.goto('/')
-    const legal = page.locator('.footer-column').filter({ hasText: 'Legal' })
+    const legal = page.locator('.footer-column').filter({ hasText: 'Suporte' })
     await expect(legal.getByRole('link', { name: 'Privacidade' })).toHaveAttribute('href', '/privacy')
     await expect(legal.getByRole('link', { name: 'Cookies' })).toHaveAttribute('href', '/cookies')
-    await expect(legal.getByRole('link', { name: 'Termos' })).toHaveAttribute('href', '/terms')
+    await expect(legal.getByRole('link', { name: 'Termos de uso' })).toHaveAttribute('href', '/terms')
   })
 })

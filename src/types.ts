@@ -62,7 +62,7 @@ export const localeCode = (locale: Locale): string => {
 
 export const pageKindFromSlug = (slug?: string): PageKind => {
   if (!slug) return 'home'
-  if (slug === 'features') return 'features'
+  if (slug === 'features' || slug === 'produto') return 'features'
   if (slug === 'platform') return 'platform'
   if (slug === 'pricing') return 'pricing'
   if (slug === 'compare') return 'compare'

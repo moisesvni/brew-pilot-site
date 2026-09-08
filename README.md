@@ -12,6 +12,8 @@ npm run dev
 
 `VITE_BREW_PILOT_APP_URL` aponta para o aplicativo. Login, cadastro, planos e documentos legais são resolvidos pelo `BrewPilotAppConnector`. O site não mantém preços nem checkout locais.
 
+Os links sociais do footer são opcionais e configurados por `VITE_INSTAGRAM_URL`, `VITE_FACEBOOK_URL` e `VITE_DISCORD_URL`.
+
 ## Build
 
 ```bash

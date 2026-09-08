@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://brewpilot.com</loc></url>
+  <url><loc>https://brewpilot.com/produto</loc></url>
   <url><loc>https://brewpilot.com/features</loc></url>
   <url><loc>https://brewpilot.com/platform</loc></url>
   <url><loc>https://brewpilot.com/pricing</loc></url>
@@ -10,6 +11,7 @@
   <url><loc>https://brewpilot.com/cookies</loc></url>
   <url><loc>https://brewpilot.com/terms</loc></url>
   <url><loc>https://brewpilot.com/en</loc></url>
+  <url><loc>https://brewpilot.com/en/produto</loc></url>
   <url><loc>https://brewpilot.com/en/features</loc></url>
   <url><loc>https://brewpilot.com/en/platform</loc></url>
   <url><loc>https://brewpilot.com/en/pricing</loc></url>
@@ -19,6 +21,7 @@
   <url><loc>https://brewpilot.com/en/cookies</loc></url>
   <url><loc>https://brewpilot.com/en/terms</loc></url>
   <url><loc>https://brewpilot.com/es</loc></url>
+  <url><loc>https://brewpilot.com/es/produto</loc></url>
   <url><loc>https://brewpilot.com/es/features</loc></url>
   <url><loc>https://brewpilot.com/es/platform</loc></url>
   <url><loc>https://brewpilot.com/es/pricing</loc></url>

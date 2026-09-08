@@ -8,6 +8,7 @@ export default defineConfig({
   ssgOptions: {
     includedRoutes: () => [
       '/',
+      '/produto',
       '/features',
       '/platform',
       '/pricing',
@@ -22,6 +23,7 @@ export default defineConfig({
       '/compare/beersmith',
       '/compare/brewers-friend',
       '/en',
+      '/en/produto',
       '/en/features',
       '/en/platform',
       '/en/pricing',
@@ -36,6 +38,7 @@ export default defineConfig({
       '/en/compare/beersmith',
       '/en/compare/brewers-friend',
       '/es',
+      '/es/produto',
       '/es/features',
       '/es/platform',
       '/es/pricing',
