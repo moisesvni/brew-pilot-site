@@ -47,11 +47,11 @@ const documents: Record<Locale, Record<LegalKind, LegalDocument>> = {
       backLabel: 'Voltar para o Brew Pilot',
       contentsLabel: 'Nesta política',
       noteTitle: 'Sua escolha pode mudar',
-      noteBody: 'A medição só é ativada depois do consentimento. Você pode revisar essa escolha nas preferências de privacidade do aplicativo.',
+      noteBody: 'A medição só é ativada depois do consentimento. Você pode revisar essa escolha nas preferências de privacidade do Brew Pilot.',
       sections: [
         { title: 'O que são cookies', paragraphs: ['Cookies são pequenos arquivos ou identificadores armazenados no navegador. Tecnologias equivalentes podem cumprir funções semelhantes.'] },
         { title: 'Categorias usadas pelo Brew Pilot', paragraphs: ['O armazenamento necessário mantém sessão, idioma e preferências de privacidade, além de apoiar autenticação, segurança e funcionamento do serviço.', 'A medição usa o Google Analytics 4 somente após consentimento explícito. Não usamos cookies de publicidade comportamental nesta implementação.'] },
-        { title: 'Suas escolhas', paragraphs: ['Você pode aceitar ou recusar cookies de medição. A escolha pode ser alterada a qualquer momento pelo link de preferências no aplicativo.'] },
+        { title: 'Suas escolhas', paragraphs: ['Você pode aceitar ou recusar cookies de medição. A escolha pode ser alterada a qualquer momento pelo link de preferências no Brew Pilot.'] },
         { title: 'Google Analytics', paragraphs: ['O Google Analytics pode coletar identificadores online, dados do dispositivo e interações com páginas. Não o configure antes do consentimento nem envie dados que identifiquem diretamente uma pessoa.'] },
       ],
     },

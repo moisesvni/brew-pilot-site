@@ -19,6 +19,12 @@ const i18n = createI18n<any>({
 
 export const createApp = ViteSSG(App, { routes, scrollBehavior }, ({ app, router: appRouter }) => {
   app.use(i18n)
+  if (typeof window !== 'undefined') {
+    window.history.scrollRestoration = 'manual'
+    appRouter.isReady().then(() => {
+      if (!window.location.hash) window.scrollTo({ top: 0, behavior: 'auto' })
+    })
+  }
   appRouter.afterEach((to) => {
     ;(i18n.global as any).locale.value = localeFromPath(to.path) as Locale
   })
