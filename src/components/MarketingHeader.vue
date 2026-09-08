@@ -6,7 +6,7 @@ import { useI18n } from 'vue-i18n'
 import { localizedPath, localeLabels, type Locale } from '../types'
 import { brewPilotApp } from '../utils/connector'
 import { trackMarketingEvent } from '../utils/analytics'
-import logo from '../assets/logo-brew-right-full.png'
+import logo from '../assets/logo-brew-right-full.webp'
 
 const route = useRoute()
 const { t } = useI18n()

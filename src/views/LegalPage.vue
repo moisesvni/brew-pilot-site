@@ -5,7 +5,7 @@ import { useHead } from '@unhead/vue'
 import { getLegalDocument, type LegalKind } from '../legalContent'
 import { localeCode, localeFromPath, localizedPath } from '../types'
 import { supportEmail } from '../utils/connector'
-import logo from '../assets/logo-brew-right-full.png'
+import logo from '../assets/logo-brew-right-full.webp'
 
 const route = useRoute()
 const locale = computed(() => localeFromPath(route.path))
