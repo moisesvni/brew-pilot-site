@@ -1,10 +1,11 @@
-import type { RouteLocationNormalized, RouteRecordRaw } from 'vue-router'
+import type { RouteComponent, RouteLocationNormalized, RouteRecordRaw } from 'vue-router'
 import MarketingPage from './views/MarketingPage.vue'
-import LegalPage from './views/LegalPage.vue'
-import NotFoundPage from './views/NotFoundPage.vue'
 import { localizedPath, pageKindFromSlug, type Locale } from './types'
 
-const localeRoute = (locale: Locale, slug: string, indexable = true, component = MarketingPage): RouteRecordRaw => ({
+const LegalPage = () => import('./views/LegalPage.vue')
+const NotFoundPage = () => import('./views/NotFoundPage.vue')
+
+const localeRoute = (locale: Locale, slug: string, indexable = true, component: RouteComponent = MarketingPage): RouteRecordRaw => ({
   path: localizedPath(locale, slug),
   name: `${locale}-${slug || 'home'}`,
   component,

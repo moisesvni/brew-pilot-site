@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "start": "vite",
     "prebuild": "node scripts/generate-seo.mjs",
     "build": "vue-tsc -b && vite-ssg build",
     "preview": "vite preview",
