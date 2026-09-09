@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted, ref } from 'vue'
-import { mdiCalendarClock, mdiChartLine, mdiClipboardCheckOutline, mdiFileDocumentOutline, mdiFlaskOutline, mdiPackageVariantClosed, mdiSourceBranch, mdiThermometer, mdiTuneVariant } from '@mdi/js'
+import { mdiCalendarClock, mdiChartLine, mdiFileDocumentOutline, mdiFlaskOutline, mdiSourceBranch, mdiThermometer } from '@mdi/js'
 import { useRoute } from 'vue-router'
 import { useHead } from '@unhead/vue'
 import { getPageCopy, getUi, type MarketingPageKind } from '../content'
@@ -82,7 +82,6 @@ const heroHeadingLines = computed(() => {
   const words = copy.value.meta.heading.split(' ')
   return { first: words.slice(0, 3).join(' '), second: words.slice(3).join(' ') }
 })
-const toolsetIcons = [mdiFileDocumentOutline, mdiPackageVariantClosed, mdiTuneVariant, mdiClipboardCheckOutline, mdiThermometer, mdiSourceBranch]
 const cycleIcons = [mdiFileDocumentOutline, mdiCalendarClock, mdiFlaskOutline, mdiThermometer, mdiChartLine, mdiSourceBranch]
 const toolsetCardArt = [recipeCardArt, inventoryCardArt, profileCardArt, batchCardArt, fermentationCardArt, versionCardArt]
 
@@ -180,7 +179,7 @@ const heroCta = (): void => {
         <div class="toolset-intro"><p class="eyebrow">{{ productToolset.eyebrow }}</p><h2 id="toolset-title">{{ productToolset.title }}</h2><p>{{ productToolset.body }}</p></div>
         <div class="toolset-grid">
           <article v-for="(item, index) in productToolset.items" :id="['receitas-formulacao', 'estoque-custos', 'perfis-producao', 'lotes-brew-day'][index]" v-reveal :key="item[0]" :style="{ '--reveal-delay': `${index * 55}ms` }">
-            <div class="toolset-card-top"><span>0{{ index + 1 }}</span><svg class="toolset-icon" aria-hidden="true" viewBox="0 0 24 24"><path :d="toolsetIcons[index]" /></svg></div>
+            <div class="toolset-card-top"><span>0{{ index + 1 }}</span></div>
             <div class="toolset-card-art" aria-hidden="true"><img :src="toolsetCardArt[index]" alt="" loading="lazy" /></div>
             <h3>{{ item[0] }}</h3><p>{{ item[1] }}</p><small>{{ item[2] }}</small><i class="toolset-arrow" aria-hidden="true">↗</i>
           </article>

@@ -104,6 +104,7 @@ h3 { margin-bottom: 12px; font-size: 1.35rem; line-height: 1.2; letter-spacing: 
 .hero-media::before { content: ''; position: absolute; z-index: -1; inset: 12% -10% -12% 18%; border-radius: 50%; background: radial-gradient(circle, rgb(217 166 92 / 16%), transparent 66%); filter: blur(18px); }
 .hero-media .screenshot-placeholder { box-shadow: var(--marketing-shadow); transition: transform .5s cubic-bezier(.16, 1, .3, 1), border-color .25s ease, box-shadow .5s ease; }
 .hero-media:hover .screenshot-placeholder { border-color: rgb(217 166 92 / 72%); box-shadow: 0 28px 80px rgb(10 12 14 / 42%), 0 0 0 1px rgb(217 166 92 / 12%); transform: translateY(-6px) rotate(.35deg); }
+.hero-media, .toolset-grid article, .cycle-list li, .story, .bento-grid article, .pricing-plan, .platform-card { cursor: pointer; }
 .hero-stamp { position: absolute; right: -14px; bottom: -24px; width: 116px; height: 116px; display: grid; place-content: center; border: 1px solid rgb(217 166 92 / 72%); border-radius: 50%; color: var(--marketing-accent); background: var(--marketing-bg); transform: rotate(-13deg); animation: stamp-float 8s ease-in-out infinite alternate; }
 .hero-stamp span, .hero-stamp strong { display: block; text-align: center; font: 600 10px/1.3 'Geist Mono', ui-monospace, monospace; letter-spacing: .15em; }
 .hero-stamp strong { margin-top: 4px; font-size: 16px; letter-spacing: .08em; }
@@ -113,9 +114,8 @@ h3 { margin-bottom: 12px; font-size: 1.35rem; line-height: 1.2; letter-spacing: 
 .toolset-intro { max-width: 800px; margin-bottom: 42px; }
 .toolset-intro h2 { max-width: 760px; margin-bottom: 16px; }
 .toolset-intro > p:last-child { max-width: 660px; margin: 0; color: var(--marketing-muted); line-height: 1.65; }
-.toolset-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
-.toolset-grid article { position: relative; min-height: 340px; display: flex; flex-direction: column; overflow: hidden; padding: 26px; border: 1px solid var(--marketing-border); border-radius: var(--marketing-radius); background: radial-gradient(circle at 86% 22%, rgb(217 166 92 / 8%), transparent 42%), var(--marketing-surface); transition: transform .3s ease, border-color .3s ease, background .3s ease; }
-.toolset-grid article:nth-child(1), .toolset-grid article:nth-child(4) { min-height: 360px; }
+.toolset-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.toolset-grid article { position: relative; min-height: 250px; display: flex; flex-direction: column; overflow: hidden; padding: 22px; border: 1px solid var(--marketing-border); border-radius: var(--marketing-radius); background: radial-gradient(circle at 86% 22%, rgb(217 166 92 / 8%), transparent 42%), var(--marketing-surface); transition: transform .3s ease, border-color .3s ease, background .3s ease; }
 .toolset-grid article:nth-child(2) { background: radial-gradient(circle at 86% 22%, rgb(112 145 93 / 9%), transparent 42%), var(--marketing-surface); }
 .toolset-grid article:nth-child(3) { background: radial-gradient(circle at 86% 22%, rgb(105 137 180 / 9%), transparent 42%), var(--marketing-surface); }
 .toolset-grid article:nth-child(4) { background: radial-gradient(circle at 86% 22%, rgb(217 166 92 / 9%), transparent 42%), var(--marketing-surface); }
@@ -124,11 +124,9 @@ h3 { margin-bottom: 12px; font-size: 1.35rem; line-height: 1.2; letter-spacing: 
 .toolset-grid article:hover { border-color: rgb(217 166 92 / 62%); background-color: var(--marketing-raised); transform: translateY(-4px); }
 .toolset-card-top { display: flex; align-items: center; justify-content: space-between; }
 .toolset-card-top > span { color: var(--marketing-accent); font: 600 12px/1 'Geist Mono', ui-monospace, monospace; letter-spacing: .16em; }
-.toolset-icon { width: 25px; height: 25px; fill: none; stroke: var(--marketing-dim); stroke-width: 1.5; transition: transform .3s ease, stroke .3s ease; }
-.toolset-grid article:hover .toolset-icon { stroke: var(--marketing-accent); transform: translate(2px, -2px) rotate(4deg); }
-.toolset-grid h3 { position: relative; z-index: 1; max-width: 390px; margin: auto 0 12px; font-size: clamp(1.45rem, 2.5vw, 2.15rem); letter-spacing: -.045em; }
-.toolset-grid p { position: relative; z-index: 1; max-width: 530px; margin: 0; color: var(--marketing-muted); font-size: 14px; line-height: 1.58; }
-.toolset-grid small { position: relative; z-index: 1; margin-top: 22px; color: var(--marketing-dim); font: 600 10px/1.45 'Geist Mono', ui-monospace, monospace; letter-spacing: .035em; }
+.toolset-grid h3 { position: relative; z-index: 1; max-width: 64%; margin: auto 0 8px; font-size: clamp(1.25rem, 1.75vw, 1.7rem); letter-spacing: -.045em; }
+.toolset-grid p { position: relative; z-index: 1; max-width: 64%; margin: 0; color: var(--marketing-muted); font-size: 13px; line-height: 1.5; }
+.toolset-grid small { position: absolute; z-index: 1; bottom: 24px; left: 22px; max-width: 72%; color: var(--marketing-dim); font: 600 9px/1.4 'Geist Mono', ui-monospace, monospace; letter-spacing: .035em; white-space: nowrap; }
 .toolset-visual { position: absolute; top: 26px; right: 28px; width: 48%; height: 130px; color: var(--marketing-accent); opacity: .34; transition: transform .3s ease, opacity .3s ease; pointer-events: none; }
 .toolset-grid article:hover .toolset-visual { opacity: .55; transform: translate(4px, -3px); }
 .toolset-visual-1 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 24px; align-content: center; font: 600 clamp(1rem, 1.8vw, 1.45rem)/1 'Geist Mono', monospace; letter-spacing: .08em; }
@@ -156,10 +154,10 @@ h3 { margin-bottom: 12px; font-size: 1.35rem; line-height: 1.2; letter-spacing: 
 .toolset-arrow { margin-top: auto; align-self: flex-end; color: var(--marketing-dim); font-size: 18px; font-style: normal; }
 .toolset-grid article:hover .toolset-arrow { color: var(--marketing-accent); }
 .toolset-card-art { position: absolute; z-index: 0; inset: 0; overflow: hidden; pointer-events: none; }
-.toolset-card-art::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, var(--marketing-surface) 0%, rgb(32 35 38 / 82%) 38%, rgb(32 35 38 / 28%) 100%), linear-gradient(0deg, rgb(21 23 25 / 76%), transparent 56%); }
-.toolset-card-art img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center; opacity: .36; filter: saturate(.75) contrast(1.04); transform: scale(1.03); transition: opacity .3s ease, transform .35s ease; }
+.toolset-card-art::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, var(--marketing-surface) 0%, rgb(32 35 38 / 88%) 52%, rgb(32 35 38 / 24%) 100%), linear-gradient(0deg, rgb(21 23 25 / 76%), transparent 56%); }
+.toolset-card-art img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: right center; opacity: .4; filter: saturate(.75) contrast(1.04); transform: scale(1.03); transition: opacity .3s ease, transform .35s ease; }
 .toolset-grid article:hover .toolset-card-art img { opacity: .52; transform: scale(1.07); }
-.toolset-card-top, .toolset-grid h3, .toolset-grid p, .toolset-grid small, .toolset-arrow { position: relative; z-index: 1; }
+.toolset-card-top, .toolset-grid h3, .toolset-grid p, .toolset-arrow { position: relative; z-index: 1; }
 .toolset-link { margin-top: 28px; }
 .hero-index { display: flex; min-height: min(480px, 58vh); align-items: flex-end; justify-content: space-between; padding: 28px; border: 1px solid var(--marketing-border); border-radius: var(--marketing-radius); background: linear-gradient(145deg, var(--marketing-surface), var(--marketing-bg)); }
 .hero-pricing { min-height: min(560px, calc(100dvh - var(--marketing-header))); padding-block: 36px 44px; }
@@ -433,6 +431,7 @@ details p { max-width: 620px; padding: 0 36px 20px 0; color: var(--marketing-mut
   .cycle-list li:nth-child(n + 4) { border-top: 1px solid var(--marketing-border); }
   .story-grid { grid-template-columns: 1fr 1fr; }
   .story-wide { grid-column: span 2; }
+  .toolset-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .footer-main { grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 44px 32px; }
   .footer-brand { grid-row: span 2; }
 }
@@ -485,6 +484,7 @@ details p { max-width: 620px; padding: 0 36px 20px 0; color: var(--marketing-mut
   .story-tall .screenshot-placeholder { margin: -22px -22px 0; width: calc(100% + 44px); }
   .bento-grid, .tools-grid, .about-grid, .compare-grid, .toolset-grid { grid-template-columns: 1fr; }
   .toolset-grid article:nth-child(n) { grid-column: auto; min-height: 250px; }
+  .toolset-grid small { right: 48px; max-width: none; white-space: normal; }
   .bento-grid article, .tools-grid article { min-height: 220px; }
   .assistant-section { padding-block: 36px; }
   .assistant-mark { justify-self: start; width: 220px; }
