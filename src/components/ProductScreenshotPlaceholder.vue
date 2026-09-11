@@ -5,7 +5,7 @@ withDefaults(defineProps<ScreenshotProps>(), { ratio: '16 / 10', tone: 'wide' })
 </script>
 
 <template>
-  <figure class="screenshot-placeholder" :class="`placeholder-${tone}`" :style="{ aspectRatio: ratio }" :data-screenshot-id="id">
+  <figure class="screenshot-placeholder" :class="`placeholder-${tone}`" :data-screenshot-id="id">
     <div class="placeholder-grid" aria-hidden="true"></div>
     <figcaption class="placeholder-copy">
       <span class="placeholder-mark" aria-hidden="true">BP</span>

@@ -157,6 +157,11 @@ h3 { margin-bottom: 12px; font-size: 1.35rem; line-height: 1.2; letter-spacing: 
 .toolset-card-art::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, var(--marketing-surface) 0%, rgb(32 35 38 / 88%) 52%, rgb(32 35 38 / 24%) 100%), linear-gradient(0deg, rgb(21 23 25 / 76%), transparent 56%); }
 .toolset-card-art img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: right center; opacity: .4; filter: saturate(.75) contrast(1.04); transform: scale(1.03); transition: opacity .3s ease, transform .35s ease; }
 .toolset-grid article:hover .toolset-card-art img { opacity: .52; transform: scale(1.07); }
+.toolset-grid article:nth-child(2) { --reveal-delay: 55ms; }
+.toolset-grid article:nth-child(3) { --reveal-delay: 110ms; }
+.toolset-grid article:nth-child(4) { --reveal-delay: 165ms; }
+.toolset-grid article:nth-child(5) { --reveal-delay: 220ms; }
+.toolset-grid article:nth-child(6) { --reveal-delay: 275ms; }
 .toolset-card-top, .toolset-grid h3, .toolset-grid p, .toolset-arrow { position: relative; z-index: 1; }
 .toolset-link { margin-top: 28px; }
 .hero-index { display: flex; min-height: min(480px, 58vh); align-items: flex-end; justify-content: space-between; padding: 28px; border: 1px solid var(--marketing-border); border-radius: var(--marketing-radius); background: linear-gradient(145deg, var(--marketing-surface), var(--marketing-bg)); }
@@ -263,6 +268,8 @@ details p { max-width: 620px; padding: 0 36px 20px 0; color: var(--marketing-mut
 .pricing-source { flex: 0 0 auto; color: var(--marketing-dim); font: 600 10px/1.3 'Geist Mono', ui-monospace, monospace; letter-spacing: .08em; text-transform: uppercase; }
 .pricing-plan-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; align-items: stretch; }
 .pricing-plan { min-height: 560px; display: flex; flex-direction: column; padding: 26px; border: 1px solid var(--marketing-border); border-radius: var(--marketing-radius); background: var(--marketing-surface); transition: transform .3s cubic-bezier(.16, 1, .3, 1), border-color .25s ease, box-shadow .3s ease; }
+.pricing-plan:nth-child(2) { --reveal-delay: 90ms; }
+.pricing-plan:nth-child(3) { --reveal-delay: 180ms; }
 .pricing-plan:hover { border-color: rgb(217 166 92 / 60%); box-shadow: 0 22px 60px rgb(10 12 14 / 28%); transform: translateY(-6px); }
 .pricing-plan--featured { border-color: rgb(217 166 92 / 74%); background: linear-gradient(145deg, rgb(217 166 92 / 16%), var(--marketing-surface) 45%); box-shadow: inset 0 0 0 1px rgb(217 166 92 / 8%); }
 .pricing-plan--pro { color: var(--marketing-on-accent); border-color: rgb(217 166 92 / 72%); background: linear-gradient(145deg, #d9a65c, #bd8240); }
@@ -298,6 +305,11 @@ details p { max-width: 620px; padding: 0 36px 20px 0; color: var(--marketing-mut
 .platform-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
 .platform-card { position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: 18px 26px; align-content: start; min-height: 310px; padding: 24px; overflow: hidden; border: 1px solid var(--marketing-border); border-radius: var(--marketing-radius); background: var(--marketing-surface); transition: transform .3s cubic-bezier(.16, 1, .3, 1), border-color .25s ease, box-shadow .3s ease; }
 .platform-card:hover { border-color: rgb(217 166 92 / 56%); box-shadow: 0 20px 54px rgb(10 12 14 / 25%); transform: translateY(-5px); }
+.platform-card:nth-child(2) { --reveal-delay: 70ms; }
+.platform-card:nth-child(3) { --reveal-delay: 140ms; }
+.platform-card:nth-child(4) { --reveal-delay: 210ms; }
+.platform-card:nth-child(5) { --reveal-delay: 280ms; }
+.platform-card:nth-child(6) { --reveal-delay: 350ms; }
 .platform-card--accent { background: linear-gradient(145deg, rgb(217 166 92 / 16%), var(--marketing-surface) 58%); }
 .platform-card-top { grid-column: 1 / -1; display: flex; justify-content: space-between; color: var(--marketing-accent); font: 600 10px/1.2 'Geist Mono', ui-monospace, monospace; letter-spacing: .1em; text-transform: uppercase; }
 .platform-card-top span:last-child { color: var(--marketing-dim); }
@@ -352,7 +364,7 @@ details p { max-width: 620px; padding: 0 36px 20px 0; color: var(--marketing-mut
 .not-found { min-height: calc(100dvh - 220px); display: grid; align-content: center; justify-items: start; padding-block: 80px; }
 .not-found h1 { font-size: clamp(2.2rem, 6vw, 5rem); }
 
-.screenshot-placeholder { position: relative; width: 100%; min-height: 170px; overflow: hidden; display: flex; align-items: flex-end; margin: 0; padding: 20px; border: 1px dashed var(--marketing-control); border-radius: var(--marketing-radius); background: radial-gradient(circle at 80% 10%, rgb(217 166 92 / 13%), transparent 35%), linear-gradient(145deg, #262a2d, #181a1c); }
+.screenshot-placeholder { position: relative; width: 100%; min-height: 170px; aspect-ratio: 16 / 10; overflow: hidden; display: flex; align-items: flex-end; margin: 0; padding: 20px; border: 1px dashed var(--marketing-control); border-radius: var(--marketing-radius); background: radial-gradient(circle at 80% 10%, rgb(217 166 92 / 13%), transparent 35%), linear-gradient(145deg, #262a2d, #181a1c); }
 .placeholder-tall { min-height: 320px; }
 .placeholder-square { min-height: 260px; }
 .placeholder-grid { position: absolute; inset: 15% 8% 22%; opacity: .45; background-image: linear-gradient(var(--marketing-border) 1px, transparent 1px), linear-gradient(90deg, var(--marketing-border) 1px, transparent 1px); background-size: 34px 34px; transform: perspective(420px) rotateX(52deg) rotateZ(-7deg) scale(1.15); transform-origin: center bottom; }

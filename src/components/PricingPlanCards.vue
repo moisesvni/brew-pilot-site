@@ -8,7 +8,7 @@ const emit = defineEmits<{ select: [] }>()
 
 <template>
   <div class="pricing-plan-grid">
-    <article v-for="(plan, index) in plans" :key="plan.key" class="pricing-plan" :class="[`pricing-plan--${plan.key}`, { 'pricing-plan--featured': plan.featured }]" :style="{ '--reveal-delay': `${index * 90}ms` }">
+    <article v-for="(plan, index) in plans" :key="plan.key" class="pricing-plan" :class="[`pricing-plan--${plan.key}`, { 'pricing-plan--featured': plan.featured }]">
       <div class="pricing-plan-top"><span class="pricing-plan-marker"><svg v-if="plan.key === 'pro'" class="pricing-crown" aria-hidden="true" viewBox="0 0 24 24"><path :d="mdiCrown" /></svg>{{ plan.marker }}</span><span class="pricing-plan-index">0{{ index + 1 }}</span></div>
       <h3>{{ plan.name }}</h3>
       <p class="pricing-plan-description">{{ plan.description }}</p>

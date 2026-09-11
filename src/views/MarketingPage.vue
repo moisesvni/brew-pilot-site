@@ -18,6 +18,7 @@ import batchCardArt from '../assets/back-lote.webp'
 import fermentationCardArt from '../assets/back-fermentable.webp'
 import versionCardArt from '../assets/back-version.webp'
 import aboutArt from '../assets/back-sobre.webp'
+import heroTexture from '../assets/brew-pilot-wort-texture.webp'
 import productPrintLight from '../assets/print-recipe-ligth.webp'
 import productPrintDark from '../assets/print-recipe-back.webp'
 
@@ -113,6 +114,7 @@ useHead(() => ({
     { name: 'twitter:description', content: copy.value.meta.description },
   ],
   link: [
+    { rel: 'preload' as const, as: 'image', href: heroTexture, fetchpriority: 'high' },
     { rel: 'canonical' as const, href: canonical.value },
     ...alternateLinks.value.map((item) => ({ rel: 'alternate' as const, hreflang: item.hreflang, href: item.href })),
   ],
@@ -178,7 +180,7 @@ const heroCta = (): void => {
       <section id="ferramentas" v-reveal class="product-toolset page-wrap" aria-labelledby="toolset-title">
         <div class="toolset-intro"><p class="eyebrow">{{ productToolset.eyebrow }}</p><h2 id="toolset-title">{{ productToolset.title }}</h2><p>{{ productToolset.body }}</p></div>
         <div class="toolset-grid">
-          <article v-for="(item, index) in productToolset.items" :id="['receitas-formulacao', 'estoque-custos', 'perfis-producao', 'lotes-brew-day'][index]" v-reveal :key="item[0]" :style="{ '--reveal-delay': `${index * 55}ms` }">
+          <article v-for="(item, index) in productToolset.items" :id="['receitas-formulacao', 'estoque-custos', 'perfis-producao', 'lotes-brew-day'][index]" v-reveal :key="item[0]">
             <div class="toolset-card-top"><span>0{{ index + 1 }}</span></div>
             <div class="toolset-card-art" aria-hidden="true"><img :src="toolsetCardArt[index]" alt="" loading="lazy" /></div>
             <h3>{{ item[0] }}</h3><p>{{ item[1] }}</p><small>{{ item[2] }}</small><i class="toolset-arrow" aria-hidden="true">↗</i>
@@ -217,7 +219,7 @@ const heroCta = (): void => {
         <div class="platform-index" aria-hidden="true"><span>BP</span><b>BREW OS</b></div>
       </section>
       <section v-reveal class="platform-grid page-wrap" :aria-label="ui.common.productStories">
-        <article v-for="(section, index) in copy.sections" v-reveal :key="section.title" class="platform-card" :class="{ 'platform-card--accent': index === 2 }" :style="{ '--reveal-delay': `${index * 70}ms` }">
+        <article v-for="(section, index) in copy.sections" v-reveal :key="section.title" class="platform-card" :class="{ 'platform-card--accent': index === 2 }">
           <div class="platform-card-top"><span>0{{ index + 1 }}</span><span>{{ ui.cycle[index] || ui.common.soon }}</span></div>
           <h2>{{ section.title }}</h2>
           <p>{{ section.body }}</p>
