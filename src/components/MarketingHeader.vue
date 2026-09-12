@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted, ref } from 'vue'
-import { mdiCompassOutline, mdiInformationOutline, mdiTagOutline, mdiViewGridOutline } from '@mdi/js'
+import { mdiCompassOutline, mdiInformationOutline, mdiOpenInNew, mdiTagOutline, mdiViewGridOutline } from '@mdi/js'
 import { useRoute } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { localizedPath, localeLabels, type Locale } from '../types'
@@ -78,7 +78,7 @@ onUnmounted(() => {
           </div>
         </div>
         <a :href="productLink()">{{ t('nav.product') }}</a>
-        <a v-if="docsUrl" :href="docsUrl" target="_blank" rel="noopener noreferrer">{{ t('footer.documentation') }} <span aria-hidden="true">↗</span></a>
+        <a v-if="docsUrl" class="docs-link" :href="docsUrl" target="_blank" rel="noopener noreferrer">{{ t('footer.documentation') }} <svg aria-hidden="true" viewBox="0 0 24 24"><path :d="mdiOpenInNew" /></svg></a>
       </nav>
 
       <div class="header-actions">

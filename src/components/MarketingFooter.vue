@@ -16,6 +16,10 @@ const pageLink = (page: string): string => localizedPath(locale.value, page)
 const topicLink = (anchor: string): string => route.meta.kind === 'home' ? `#${anchor}` : `${pageLink('')}#${anchor}`
 const ctaHref = computed(() => brewPilotApp.isConfigured ? brewPilotApp.url('register') : pageLink('features'))
 const ctaLabel = computed(() => brewPilotApp.isConfigured ? t('nav.start') : t('footer.ctaAction'))
+const signatureParts = computed(() => {
+  const words = t('footer.signature').split(' ')
+  return { first: words.slice(0, -3).join(' '), accent: words.slice(-3).join(' ') }
+})
 const languages: Locale[] = ['pt-BR', 'en-US', 'es']
 const languageLink = (language: Locale): string => localizedPath(language, slug.value)
 const productLink = (anchor?: string): string => `${pageLink('produto')}${anchor ? `#${anchor}` : ''}`
@@ -48,7 +52,7 @@ const socialLinks = computed(() => [
         </a>
         <div class="footer-signature">
           <p>{{ t('footer.eyebrow') }}</p>
-          <h2>{{ t('footer.signature') }}</h2>
+          <h2><span>{{ signatureParts.first }}&nbsp;</span><span class="footer-signature-accent">{{ signatureParts.accent }}</span></h2>
         </div>
         <nav v-if="socialLinks.length" class="footer-socials" aria-label="Redes sociais">
           <a v-for="link in socialLinks" :key="link.label" :href="link.href" :aria-label="link.label" target="_blank" rel="noopener noreferrer">

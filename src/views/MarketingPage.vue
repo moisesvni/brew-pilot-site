@@ -83,7 +83,7 @@ const productToolset = computed(() => ({
 }[locale.value]))
 const heroHeadingLines = computed(() => {
   const words = copy.value.meta.heading.split(' ')
-  return { first: words.slice(0, 3).join(' '), second: words.slice(3).join(' ') }
+  return { first: words.slice(0, 4).join(' '), second: words.slice(4).join(' ') }
 })
 const cycleIcons = [mdiFileDocumentOutline, mdiCalendarClock, mdiFlaskOutline, mdiThermometer, mdiChartLine, mdiSourceBranch]
 const toolsetCardArt = [recipeCardArt, inventoryCardArt, profileCardArt, batchCardArt, fermentationCardArt, versionCardArt]
@@ -149,7 +149,7 @@ const heroCta = (): void => {
     <section id="produto" class="hero page-wrap" :class="{ 'hero-draft': isDraft, 'hero-home': kind === 'home', 'hero-pricing': kind === 'pricing' }">
       <div class="hero-copy">
         <p class="eyebrow">{{ copy.meta.eyebrow }}</p>
-        <h1 v-if="kind === 'home'"><span class="hero-heading-first">{{ heroHeadingLines.first }}</span><br>{{ heroHeadingLines.second }}</h1>
+        <h1 v-if="kind === 'home'"><span class="hero-heading-first">{{ heroHeadingLines.first }}</span><br><span class="hero-heading-accent">{{ heroHeadingLines.second }}</span></h1>
         <h1 v-else>{{ copy.meta.heading }}</h1>
         <p class="lead">{{ copy.intro }}</p>
         <div class="hero-actions">
