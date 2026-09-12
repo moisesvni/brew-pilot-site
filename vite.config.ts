@@ -4,6 +4,9 @@ import { defineConfig } from 'vite'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [vue()],
+  build: {
+    assetsInlineLimit: 0,
+  },
   // @ts-expect-error vite-ssg consumes this Vite config extension.
   ssgOptions: {
     includedRoutes: () => [
