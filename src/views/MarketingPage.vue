@@ -23,9 +23,11 @@ import productPrintLight from '../assets/print-recipe-ligth.webp'
 import productPrintDark from '../assets/print-recipe-back.webp'
 
 const revealObservers = new WeakMap<HTMLElement, IntersectionObserver>()
+const revealVariants = ['up', 'left', 'right', 'scale'] as const
 const vReveal = {
-  mounted: (element: HTMLElement) => {
-    element.classList.add('scroll-reveal')
+  mounted: (element: HTMLElement, binding: { arg?: string }) => {
+    const variant = revealVariants.includes(binding.arg as typeof revealVariants[number]) ? binding.arg : 'up'
+    element.classList.add('scroll-reveal', 'scroll-reveal-ready', `scroll-reveal--${variant}`)
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) {
       element.classList.add('is-visible')
       return
@@ -167,20 +169,20 @@ const heroCta = (): void => {
     </section>
 
     <template v-if="kind === 'home'">
-      <section id="processo" v-reveal class="cycle-section page-wrap" aria-labelledby="cycle-title">
+      <section id="processo" v-reveal:up class="cycle-section page-wrap" aria-labelledby="cycle-title">
         <div class="cycle-stamp" aria-hidden="true">
           <img :src="brewStamp" alt="" width="861" height="845" />
         </div>
         <div class="section-intro"><p class="eyebrow">{{ copy.sections[0].title }}</p><h2 id="cycle-title">{{ copy.sections[0].body }}</h2></div>
         <ol class="cycle-list">
-          <li v-for="(step, index) in ui.cycle" :key="step" :class="{ featured: index === 0 }"><svg class="cycle-icon" aria-hidden="true" viewBox="0 0 24 24"><path :d="cycleIcons[index]" /></svg><span>0{{ index + 1 }}</span><strong>{{ step }}</strong><em>{{ ui.cycleDescriptions[index] }}</em></li>
+          <li v-for="(step, index) in ui.cycle" v-reveal:up :key="step" :class="{ featured: index === 0 }"><svg class="cycle-icon" aria-hidden="true" viewBox="0 0 24 24"><path :d="cycleIcons[index]" /></svg><span>0{{ index + 1 }}</span><strong>{{ step }}</strong><em>{{ ui.cycleDescriptions[index] }}</em></li>
         </ol>
       </section>
 
-      <section id="ferramentas" v-reveal class="product-toolset page-wrap" aria-labelledby="toolset-title">
+      <section id="ferramentas" v-reveal:left class="product-toolset page-wrap" aria-labelledby="toolset-title">
         <div class="toolset-intro"><p class="eyebrow">{{ productToolset.eyebrow }}</p><h2 id="toolset-title">{{ productToolset.title }}</h2><p>{{ productToolset.body }}</p></div>
         <div class="toolset-grid">
-          <article v-for="(item, index) in productToolset.items" :id="['receitas-formulacao', 'estoque-custos', 'perfis-producao', 'lotes-brew-day'][index]" v-reveal :key="item[0]">
+          <article v-for="(item, index) in productToolset.items" :id="['receitas-formulacao', 'estoque-custos', 'perfis-producao', 'lotes-brew-day'][index]" v-reveal:scale :key="item[0]">
             <div class="toolset-card-top"><span>0{{ index + 1 }}</span></div>
             <div class="toolset-card-art" aria-hidden="true"><img :src="toolsetCardArt[index]" alt="" loading="lazy" /></div>
             <h3>{{ item[0] }}</h3><p>{{ item[1] }}</p><small>{{ item[2] }}</small><i class="toolset-arrow" aria-hidden="true">↗</i>
@@ -189,19 +191,19 @@ const heroCta = (): void => {
         <a class="text-link toolset-link" :href="localized('features')">{{ ui.nav.product }} <span aria-hidden="true">↗</span></a>
       </section>
 
-      <section id="sobre" v-reveal class="about-strip page-wrap" aria-labelledby="home-about-title">
+      <section id="sobre" v-reveal:right class="about-strip page-wrap" aria-labelledby="home-about-title">
         <img class="about-art" :src="aboutArt" alt="" aria-hidden="true" loading="lazy" />
         <div><p class="eyebrow">{{ ui.footer.about }}</p><h2 id="home-about-title">{{ ui.homeAboutTitle }}</h2></div>
         <div><p>{{ ui.homeAboutBody }}</p><a class="text-link" :href="localized('about')">{{ ui.homeAboutLink }} <span aria-hidden="true">↗</span></a></div>
       </section>
 
-      <section id="precos" v-reveal class="home-pricing page-wrap" aria-labelledby="home-pricing-title">
+      <section id="precos" v-reveal:up class="home-pricing page-wrap" aria-labelledby="home-pricing-title">
         <div class="section-intro"><p class="eyebrow">{{ ui.nav.pricing }}</p><h2 id="home-pricing-title">{{ ui.pricingPlansTitle }}</h2><p>{{ ui.homeValueBody }}</p></div>
         <PricingPlanCards :plans="ui.pricingPlans" @select="openApp('plans')" />
         <p class="pricing-disclaimer">{{ ui.pricingDisclaimer }}</p>
       </section>
 
-      <section v-reveal class="value-section page-wrap" id="faq">
+      <section v-reveal:left class="value-section page-wrap" id="faq">
         <div class="section-intro"><p class="eyebrow">{{ ui.common.faq }}</p><h2>{{ ui.faqTitle }}</h2><p>{{ ui.pricingFaqIntro }}</p></div>
         <div class="value-actions"><div class="faq-list"><details v-for="item in copy.faq" :key="item.question"><summary>{{ item.question }}</summary><p>{{ item.answer }}</p></details></div></div>
       </section>
@@ -209,17 +211,17 @@ const heroCta = (): void => {
     </template>
 
     <template v-else-if="kind === 'features'">
-      <section v-reveal class="feature-anchors page-wrap"><a v-for="(section, index) in copy.sections" :key="section.title" :href="`#feature-${index + 1}`"><span>0{{ index + 1 }}</span>{{ section.title }}</a></section>
-      <section v-for="(section, index) in copy.sections" v-reveal :id="`feature-${index + 1}`" :key="section.title" class="feature-row page-wrap" :class="{ reverse: index % 2 === 1 }"><div><p class="eyebrow">{{ ui.cycle[index] || ui.common.soon }}</p><h2>{{ section.title }}</h2><p>{{ section.body }}</p></div><ProductScreenshotPlaceholder v-if="copy.screenshots[index]" v-bind="copy.screenshots[index]" /></section>
+      <section v-reveal:scale class="feature-anchors page-wrap"><a v-for="(section, index) in copy.sections" :key="section.title" :href="`#feature-${index + 1}`"><span>0{{ index + 1 }}</span>{{ section.title }}</a></section>
+      <section v-for="(section, index) in copy.sections" v-reveal:right :id="`feature-${index + 1}`" :key="section.title" class="feature-row page-wrap" :class="{ reverse: index % 2 === 1 }"><div><p class="eyebrow">{{ ui.cycle[index] || ui.common.soon }}</p><h2>{{ section.title }}</h2><p>{{ section.body }}</p></div><ProductScreenshotPlaceholder v-if="copy.screenshots[index]" v-bind="copy.screenshots[index]" /></section>
     </template>
 
     <template v-else-if="kind === 'platform'">
-      <section v-reveal class="platform-intro page-wrap">
+      <section v-reveal:left class="platform-intro page-wrap">
         <div><h2>{{ ui.platformOverviewTitle }}</h2><p>{{ copy.intro }}</p></div>
         <div class="platform-index" aria-hidden="true"><span>BP</span><b>BREW OS</b></div>
       </section>
-      <section v-reveal class="platform-grid page-wrap" :aria-label="ui.common.productStories">
-        <article v-for="(section, index) in copy.sections" v-reveal :key="section.title" class="platform-card" :class="{ 'platform-card--accent': index === 2 }">
+      <section v-reveal:up class="platform-grid page-wrap" :aria-label="ui.common.productStories">
+        <article v-for="(section, index) in copy.sections" v-reveal:scale :key="section.title" class="platform-card" :class="{ 'platform-card--accent': index === 2 }">
           <div class="platform-card-top"><span>0{{ index + 1 }}</span><span>{{ ui.cycle[index] || ui.common.soon }}</span></div>
           <h2>{{ section.title }}</h2>
           <p>{{ section.body }}</p>
@@ -229,13 +231,13 @@ const heroCta = (): void => {
     </template>
 
     <template v-else-if="kind === 'pricing'">
-      <section v-reveal class="pricing-intro page-wrap">
+      <section v-reveal:left class="pricing-intro page-wrap">
         <div>
           <h2>{{ copy.sections[0].body }}</h2>
         </div>
         <p>{{ copy.intro }}</p>
       </section>
-      <section v-reveal class="pricing-plans page-wrap" aria-labelledby="pricing-plans-title">
+      <section v-reveal:up class="pricing-plans page-wrap" aria-labelledby="pricing-plans-title">
         <div class="pricing-plans-heading">
           <div><h2 id="pricing-plans-title">{{ ui.pricingPlansTitle }}</h2></div>
           <span class="pricing-source">{{ ui.common.appOnly }}</span>
@@ -243,7 +245,7 @@ const heroCta = (): void => {
         <PricingPlanCards :plans="ui.pricingPlans" @select="openApp('plans')" />
         <p class="pricing-disclaimer">{{ ui.pricingDisclaimer }}</p>
       </section>
-      <section v-reveal class="pricing-faq page-wrap" id="faq"><div><p class="eyebrow">{{ ui.common.faq }}</p><h2>{{ ui.faqTitle }}</h2><p class="pricing-faq-intro">{{ ui.pricingFaqIntro }}</p></div><div class="faq-list"><details v-for="item in copy.faq" :key="item.question"><summary>{{ item.question }}</summary><p>{{ item.answer }}</p></details></div></section>
+      <section v-reveal:right class="pricing-faq page-wrap" id="faq"><div><p class="eyebrow">{{ ui.common.faq }}</p><h2>{{ ui.faqTitle }}</h2><p class="pricing-faq-intro">{{ ui.pricingFaqIntro }}</p></div><div class="faq-list"><details v-for="item in copy.faq" :key="item.question"><summary>{{ item.question }}</summary><p>{{ item.answer }}</p></details></div></section>
     </template>
 
     <template v-else-if="kind === 'tools'">
